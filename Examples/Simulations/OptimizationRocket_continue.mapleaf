@@ -1,0 +1,142 @@
+# MAPLEAF
+# File: C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Simulations\OptimizationRocket_continue.mapleaf
+# Autowritten on: 2025-04-05 21:06:32.501587
+
+Environment{
+
+	ConstantMeanWind{
+		velocity	( 2 0 0 )
+	}
+}
+
+Optimization{
+
+	DependentVariables{
+
+		Rocket{
+
+			Sustainer{
+
+				Nosecone{
+					mass	!0.007506 + 0.015/bodyWeight!
+				}
+			}
+		}
+	}
+
+	IndependentVariables{
+
+		InitialParticlePositions{
+			bestCost	0.13012291032003706
+			bestPosition	0.13469911371746246
+
+			p0{
+				bodyWeight	0.1346993836363492
+			}
+
+			p1{
+				bodyWeight	0.10023359520405782
+			}
+
+			p2{
+				bodyWeight	0.11681442798489915
+			}
+
+			p3{
+				bodyWeight	0.1126255152212126
+			}
+
+			p4{
+				bodyWeight	0.14158095586380803
+			}
+		}
+
+		bodyWeight	0.01 < Rocket.Sustainer.UpperBodyTube.mass < 0.2
+	}
+
+	ParticleSwarm{
+		nIterations	400
+		nParticles	5
+	}
+
+	costFunction	1/apogee if (apogee > 1) else max(1, -1*apogee)
+	method	PSO
+}
+
+Rocket{
+
+	Sustainer{
+
+		AltimeterMass{
+			MOI	(0 0 0)
+			cg	(0 0 0)
+			class	Mass
+			mass	0.015
+			position	(0 0 -0.31)
+		}
+
+		GeneralMass{
+			MOI	(4.08e-06 4.08e-06 3.86e-07)
+			cg	(0 0 -0.035)
+			class	Mass
+			mass	0.00952
+			position	(0 0 -0.59)
+		}
+
+		Motor{
+			class	Motor
+			path	C:\Users\taiya\anaconda3\envs\SOAR\lib\site-packages\MAPLEAF\Examples\Motors\C6-3.txt
+		}
+
+		Nosecone{
+			MOI	(4.662340917465653e-06 4.662340917465653e-06 9.44342735230976e-07)
+			aspectRatio	3.448
+			baseDiameter	0.029
+			cg	(0 0 -0.063527)
+			class	Nosecone
+			mass	0.007506
+			position	(0 0 0)
+			shape	tangentOgive
+			surfaceRoughness	0.000060
+		}
+
+		TailFins{
+			MOI	(4.1639e-07 4.1639e-07 2.151e-06)
+			cg	(0 0 -0.024579)
+			class	FinSet
+			mass	0.00245
+			numFins	3
+			position	(0 0 -0.51)
+			rootChord	0.05
+			span	0.0302
+			surfaceRoughness	0.000060
+			sweepAngle	14.7127
+			thickness	0.0001
+			tipChord	0.02967
+		}
+
+		UpperBodyTube{
+			MOI	(0.0017118892333333338 0.0017118892333333338 1.1837950000000002e-05)
+			cg	(0 0 -0.28)
+			class	Bodytube
+			length	0.46
+			mass	0.0531
+			outerDiameter	0.029
+			position	(0 0 -0.1)
+			surfaceRoughness	0.000060
+		}
+
+		class	Stage
+	}
+
+	position	(0 0 0)
+}
+
+SimControl{
+	EndCondition	Apogee
+	RocketPlot	Off
+	loggingLevel	0
+	plot	None
+	timeDiscretization	RK45Adaptive
+	timeStep	0.01
+}

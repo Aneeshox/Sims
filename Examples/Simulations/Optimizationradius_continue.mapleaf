@@ -1,0 +1,155 @@
+# MAPLEAF
+# File: C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Simulations\Optimizationradius_continue.mapleaf
+# Autowritten on: 2025-03-08 14:04:16.427615
+
+Environment{
+
+	ConstantMeanWind{
+		velocity	( 2 0 0 )
+	}
+}
+
+Optimization{
+
+	DependentVariables{
+
+		Rocket{
+
+			Sustainer{
+
+				UpperBodyTube{
+					outerDiameter	!Diameter!
+					position	!(0,0,-(aspectRatio*Diameter))!
+				}
+			}
+		}
+	}
+
+	IndependentVariables{
+		Diameter	0.015 < Rocket.Sustainer.Nosecone.baseDiameter < 0.03
+
+		InitialParticlePositions{
+			bestCost	0.005360997611748595
+			bestPosition	0.015024734275016258 3.4480596610762047 0.46007893340834816
+
+			p0{
+				Diameter	0.019127100082679774
+				aspectRatio	3.4480579401143983
+				bodylength	0.460721086266348
+			}
+
+			p1{
+				Diameter	0.02465475646782954
+				aspectRatio	3.447990601753108
+				bodylength	0.45972498304208664
+			}
+
+			p2{
+				Diameter	0.019596819039599575
+				aspectRatio	3.4479372978179867
+				bodylength	0.4596908619524414
+			}
+
+			p3{
+				Diameter	0.02161733569076977
+				aspectRatio	3.4479378555810523
+				bodylength	0.4592890469027944
+			}
+
+			p4{
+				Diameter	0.027169604502679606
+				aspectRatio	3.4479312479076687
+				bodylength	0.4608851926827729
+			}
+		}
+
+		aspectRatio	3.4479 < Rocket.Sustainer.Nosecone.aspectRatio < 3.4481
+		bodylength	0.459 < Rocket.Sustainer.UpperBodyTube.length < 0.461
+	}
+
+	ParticleSwarm{
+		nIterations	20
+		nParticles	5
+	}
+
+	costFunction	1/apogee if (apogee > 1) else max(1, -1*apogee)
+	method	PSO
+}
+
+Rocket{
+
+	Sustainer{
+
+		AltimeterMass{
+			MOI	(0 0 0)
+			cg	(0 0 0)
+			class	Mass
+			mass	0.015
+			position	(0 0 -0.31)
+		}
+
+		GeneralMass{
+			MOI	(4.08e-06 4.08e-06 3.86e-07)
+			cg	(0 0 -0.035)
+			class	Mass
+			mass	0.00952
+			position	(0 0 -0.59)
+		}
+
+		Motor{
+			class	Motor
+			path	C:\Users\taiya\anaconda3\envs\SOAR\lib\site-packages\MAPLEAF\Examples\Motors\C6-3.txt
+		}
+
+		Nosecone{
+			MOI	(4.662340917465653e-06 4.662340917465653e-06 9.44342735230976e-07)
+			aspectRatio	3.448
+			baseDiameter	0.029
+			cg	(0 0 -0.063527)
+			class	Nosecone
+			mass	0.007506
+			position	(0 0 0)
+			shape	tangentOgive
+			surfaceRoughness	0.000060
+		}
+
+		TailFins{
+			MOI	(4.1639e-07 4.1639e-07 2.151e-06)
+			cg	(0 0 -0.024579)
+			class	FinSet
+			mass	0.00245
+			numFins	3
+			position	(0 0 -0.51)
+			rootChord	0.05
+			span	0.0302
+			surfaceRoughness	0.000060
+			sweepAngle	14.7127
+			thickness	0.0001
+			tipChord	0.02967
+		}
+
+		UpperBodyTube{
+			MOI	(0.0017118892333333338 0.0017118892333333338 1.1837950000000002e-05)
+			cg	(0 0 -0.28)
+			class	Bodytube
+			length	0.46
+			mass	0.0531
+			outerDiameter	0.029
+			position	(0 0 -0.1)
+			surfaceRoughness	0.000060
+		}
+
+		class	Stage
+	}
+
+	position	(0 0 0)
+}
+
+SimControl{
+	EndCondition	Apogee
+	RocketPlot	Off
+	loggingLevel	0
+	plot	None
+	timeDiscretization	RK45Adaptive
+	timeStep	0.01
+}

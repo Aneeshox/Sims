@@ -264,7 +264,7 @@ def plotFlightPaths_NoEarth(flightPaths, showPlot=True):
     if showPlot:
         plt.show()
 
-def plot_Earth_Mayavi(earthTexture='MAPLEAF/IO/blue_marble_spherical_splitFlipped.jpg'):
+def plot_Earth_Mayavi(earthTexture=r'C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\IO\blue_marble_spherical_splitFlipped.jpg'):
     from mayavi import mlab
     from tvtk.api import tvtk  # python wrappers for the C++ vtk ecosystem
     # create a figure window (and scene)
@@ -551,6 +551,8 @@ def _getRocketPoints(timeStepNumber, flight, refAxis, perpVectors):
 
     return cg, rocketBase, tip, perpTips, canardTips, canardTails
 
+
+
 def _update_plot(timeStepNumber, flights, refAxis, perpVectors, cgPoints, flightPathLines, longitudinalRocketLines, allCanardLines, allPerpLines):
     ''' 
         Plot Update function - This gets called every time step of the simulation, updates the data for each point and line in the plot
@@ -657,9 +659,46 @@ def flightAnimation(flights, showPlot=True, saveAnimFileName=None):
     #### Create Initial Plot ####
     fig, ax = _createAnimationFigure(axisDimensions, centerOfPlot)
     cgPoints, flightPathLines, longitudinalRocketLines, allCanardLines, allPerpLines = _createInitialFlightAnimationPlot(ax, nCanards, flights, refAxis, perpVectors)
+#################################################################################################################################################################################################################################################
+    # ---- Apogee AGL legend (meters + feet) ---- #Aneesh Start
+    from matplotlib.offsetbox import AnchoredText
+
+    Z = np.asarray(flights[0].Positions[2], dtype=float)
+    z0 = float(Z[0]) if Z.size else 0.0                   # ground/launch altitude
+    ap_asl_m = float(np.max(Z)) if Z.size else 0.0        # (not shown, kept for reference)
+    ap_agl_m = float(np.max(Z - z0)) if Z.size else 0.0   # AGL
+    ap_agl_ft = ap_agl_m * 3.28084
+
+
+
+
+    # Clean title + compact legend box
+    ax.set_title(f"Apogee AGL: {ap_agl_m:.1f} m ({ap_agl_ft:.0f} ft)")
+    _ap_box = AnchoredText(
+        f"Apogee AGL\n{ap_agl_m:.1f} m / {ap_agl_ft:.0f} ft",
+        loc="upper right",
+        prop=dict(size=9),
+        frameon=True,
+        borderpad=0.4
+    )
+    _ap_box.patch.set_alpha(0.85)
+    ax.add_artist(_ap_box)
+    # ---- Aneesh End ----
+
+#################################################################################################################################################################################################################################################
+ 
 
     # Play animation
-    ani = animation.FuncAnimation(fig, _update_plot, frames=(len(Positions[0]) - 1), fargs=(flights, refAxis, perpVectors, cgPoints, flightPathLines, longitudinalRocketLines, allCanardLines, allPerpLines), interval=1, blit=False, save_count=0, repeat_delay=5000)
+    #ani = animation.FuncAnimation(fig, _update_plot, frames=(len(Positions[0]) - 1), fargs=(flights, refAxis, perpVectors, cgPoints, flightPathLines, longitudinalRocketLines, allCanardLines, allPerpLines), interval=1, blit=False, save_count=0, repeat_delay=5000)
+    ani = animation.FuncAnimation(
+        fig,
+        _update_plot,
+        frames=(len(Positions[0]) - 1),
+        fargs=(flights, refAxis, perpVectors, cgPoints, flightPathLines, longitudinalRocketLines, allCanardLines, allPerpLines),
+        interval=1,
+        blit=False,
+        repeat_delay=5000
+)
 
     if showPlot:
         plt.show()

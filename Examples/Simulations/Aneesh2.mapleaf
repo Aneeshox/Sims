@@ -6,23 +6,24 @@ SimControl{
     timeDiscretization RK45Adaptive
     timeStep 0.01 #sec
 
-    #EndCondition Altitude#Apogee #Altitude
-	#EndConditionValue 800
+    # EndCondition Altitude#Apogee #Altitude
+	# EndConditionValue 800
 
-	EndCondition Apogee
+	 EndCondition Apogee
 
     loggingLevel    2 #0# 2 #0 #2
     RocketPlot      On
 
-    plot    FlightAnimation CP Mach Aero CG Position Velocity 
+    plot    FlightAnimation CP Mach Aero CG Position Velocity AOA
 	}
 
 Environment{
     ConstantMeanWind{
-        velocity                    ( 3 0 0 ) #m/s
+        velocity        ( 3 0 0 )
     }
+
 	LaunchSite{
-        elevation             890#930.58#830.58  #1100 #777.24-883.92m average is 830.58 for Midland Texas,1400.556 #m, Relative to sea level - Impacts the acceleration of gravity at launch        
+        elevation             871.603032#890#930.58#830.58  #1100 #777.24-883.92m average is 830.58 for Midland Texas,1400.556 #m, Relative to sea level - Impacts the acceleration of gravity at launch        
 
         # Lat / Lon only influence simulations using the 'Round' or 'WGS84' earth models
         #latitude                49 # Degrees, 90 = North Pole, -90 = South Pole, 0 = Equator
@@ -97,7 +98,7 @@ NoseConeShell{
 	mass			1.75#1 for steel
 	baseDiameter			0.17 #0.1524
 	position			(0 0 0)
-	cg			(0 0 -0.03)#-0.22)
+	cg			(0 0 -0.03)
 	aspectRatio			2.68823529411764705 #2.70836571429 
 	shape			Aegis Von Karman
 	surfaceRoughness			0.000007
@@ -105,8 +106,8 @@ NoseConeShell{
 
 Payload{
 		class			Mass
-		mass			3.0
-		position		(0 0 -0.26658)
+		mass			3
+		position		(0 0 -0.46658)
 		cg				(0 0 0)
 		MOI				(0.01891858177 0.01891858177 0.01122641116)
 	}
@@ -114,14 +115,14 @@ Payload{
 Ballast{
 		class			Mass
 		mass			0 #might need idk yet
-		position		(0 0 -0.26658)
+		position		(0 0 -0.46658)
 		cg				(0 0 0)
 		#MOI				(0.01891858177 0.01891858177 0.01122641116)
 	}
 
-NoseConeTube{
+Coupler{
 	class	Bodytube
-	mass	0.1
+	mass	0.19
 	length	0.0794
 	position	(0 0 -0.457)
 	cg	(0 0 -0.05)
@@ -131,19 +132,32 @@ NoseConeTube{
 
 RecoverySystem{
 		class			RecoverySystem
-		mass			1.995806428
+		mass			0.7
 		position		(0 0 -0.1)
 		cg				(0 0 -0.1)
-		numStages 		1
+		numStages 		2
 		stage1Trigger       Apogee # Apogee, Time, Altitude
-        stage1ChuteArea     2 # m^2
-        stage1Cd            1.5 # Drag Coefficient (~0.75-0.8 for flat sheet, 1.5-1.75 for domed chute)
-        stage1DelayTime     2 #s
+        stage1ChuteArea     4.67 # m^2
+        stage1Cd            0.97 #1.5 # Drag Coefficient (~0.75-0.8 for flat sheet, 1.5-1.75 for domed chute)
+        stage1DelayTime     0.1 #s
+		stage2Trigger       Altitude # Apogee, Time, Altitude
+		stage2TriggerValue	1307.2#1807.2
+        stage2ChuteArea     18.679 #23.64 # m^2
+        stage2Cd            2.2 #1.5 # Drag Coefficient (~0.75-0.8 for flat sheet, 1.5-1.75 for domed chute)
+        stage2DelayTime     0.1 #s
+	}
+
+RecoveryBulkhead{
+		class			Mass
+		mass			0.467
+		position		(0 0 -1.0694)
+		cg				(0 0 0) #chutes are given the exact same location and cg as recovery system
+		MOI				(0.00567557453 0.00567557453 0.003367923348)#each mass component is modeled as a solid cylinder with diam 0.15m and length 0.2m
 	}
 
 Chutes{
 		class			Mass
-		mass			1.197483857
+		mass			1.497483857
 		position		(0 0 -0.8129)
 		cg				(0 0 0) #chutes are given the exact same location and cg as recovery system
 		MOI				(0.00567557453 0.00567557453 0.003367923348)#each mass component is modeled as a solid cylinder with diam 0.15m and length 0.2m
@@ -154,9 +168,9 @@ RecoveryTube{
 		class			Bodytube
 		cg			(0 0 -0.3048)
 		position	(0 0 -0.5364)
-		mass			0.997903214
+		mass			1.32 #0.997903214
 		outerDiameter		0.17
-		surfaceRoughness	0.00007
+		surfaceRoughness	0.000007
 	}
 
 intermediateTube{
@@ -164,20 +178,20 @@ intermediateTube{
 		class			Bodytube
 		cg				(0 0 -0.142)
 		position		(0 0 -1.0894)
-		mass			0.55
+		mass			0.9476 #0.55
 		outerDiameter	0.17
-		surfaceRoughness	0.00007
+		surfaceRoughness	0.000007
 	}
 
-CameraTube{
-		length			0.176
-		class			Bodytube
-		cg				(0 0 -0.2664206)
-		position		(0 0 -1.3734)
-		mass			0.35
-		outerDiameter	0.17
-		surfaceRoughness	0.00006
-	}
+# CameraTube{
+# 		length			0.176
+# 		class			Bodytube
+# 		cg				(0 0 -0.088)
+# 		position		(0 0 -1.3734)
+# 		mass			0.42 #0.35
+# 		outerDiameter	0.17
+# 		surfaceRoughness	0.000007
+# 	}
 
 CameraAssembly{
 		class			Mass
@@ -190,7 +204,7 @@ CameraAssembly{
 # AirbrakesForce{
 #         # Acts like an AeroForce object, but all coefficients are interpolated from a table instead of constants
 #         class           TabulatedAeroForce
-#         position        (0 0 0)
+#         position        (0 0 -1.6494)
 #         Aref            0.25 #todo
 #         Lref            0.25 #todo
 
@@ -207,48 +221,64 @@ CameraAssembly{
 AirbrakesAssembly{
 		length			0.2
 		class			Bodytube
-		position	(0 0 -1.5494)
+		position	(0 0 -1.3734)
 		cg			(0 0 -0.1)
-		mass			0.2 #resin finish
+		mass			0 #resin finish
 		outerDiameter		0.17
-		surfaceRoughness	0.00007 #resin finish
+		surfaceRoughness	0.000007 #resin finish
 	}
 
 Airbrakes{
 		class			Mass
-		mass			1.75
-		position		(0 0 -0.55)
+		mass			3.5
+		position		(0 0 -1.4734)
 		cg				(0 0 0)
 		MOI				(0.01891858177 0.01891858177 0.01122641116)
 	}
 
 AvionicsTube+UpperPlumbing{
-		length			0.511 # 0.353 + 0.158 added for lower plumbing
+		length			0.508 # 0.353 + 0.158 added for lower plumbing
 		class			Bodytube
 		cg				(0 0 -0.2664206)
-		position		(0 0 -1.7494)
-		mass			0.997903214
+		position		(0 0 -1.5734)
+		mass			1.4876#0.997903214
 		outerDiameter	0.17
-		surfaceRoughness	0.00007
+		surfaceRoughness	0.000007
 	}
 
 Avionics+Upperplumbing{
 		class			Mass
-		mass			3.494758035
-		position		(0 0 -1.9249) # positioned so cg avionics roughly aligns with cg of avionics tube
+		mass			4 #2.5 for avionics + 1.5 for upper plumbing
+		position		(0 0 -1.8274) # positioned so cg avionics roughly aligns with cg of avionics tube
 		cg				(0 0 0)
-		MOI				(0.0118241136 0.0118241136 0.007016506973)
+		MOI				(0.163621 0.163621 0.017564)
 	}
 
 
-UpperPVBulkheadTube{
-	class	Bodytube
-	mass			0.8
-	length			0.057273
-	cg			(0 0 -0.0286385)
-	position	(0 0 -2.2604)
-	outerDiameter		0.17
-	surfaceRoughness	0.00007
+# UpperPVBulkheadTube{
+# 	class	Bodytube
+# 	mass			0.8
+# 	length			0.057273
+# 	cg			(0 0 -0.0286385)
+# 	position	(0 0 -2.0814)
+# 	outerDiameter		0.17
+# 	surfaceRoughness	0.000007
+# 	}
+
+UpperBulkheadCasing{
+		class			Mass
+		mass			0.26 #cad
+		position		(0 0 -2.07505) 
+		cg				(0 0 -0.024)
+		MOI				(0.0118241136 0.0118241136 0.007016506973)
+	}
+
+UpperPVBulkhead{
+		class			Mass
+		mass			0.5 #cad
+		position		(0 0 -2.0814) 
+		cg				(0 0 -0.024)
+		MOI				(0.0118241136 0.0118241136 0.007016506973)
 	}
 
 
@@ -256,60 +286,77 @@ PressureVessel{
 		length			0.813
 		class			Bodytube
 		cg			(0 0 -0.4065)
-		position	(0 0 -2.317673)
-		mass			8.8
+		position	(0 0 -2.0814)
+		mass			6.1 #8.8
 		outerDiameter		0.17
-		surfaceRoughness	0.00007
+		surfaceRoughness	0.000143
 	}
 
-LowerPVBulkheadTube{
-	class	Bodytube
-	mass			0.8
-	length			0.057273
-	cg			(0 0 -0.0286385)
-	position	(0 0 -3.130673)
-	outerDiameter		0.17
-	surfaceRoughness	0.00007
+LowerPVBulkhead{
+		class			Mass
+		mass			0.5 #cad
+		position		(0 0 -2.869) 
+		cg				(0 0 -0.024)
+		MOI				(0.0118241136 0.0118241136 0.007016506973)
 	}
 
-FinCan{
+LowerPlumbingTube{
+		class		Bodytube
+		length		0.22098
+		cg			(0 0 -0.4191)
+		position	(0 0 -2.8944)
+		mass		0.9676 #with radax
+		outerDiameter	0.17
+		surfaceRoughness	0.000007
+	}
+
+InjectorBulkheadCasing{
+		class			Mass
+		mass			0.26 #cad
+		position		(0 0 -3.01538) 
+		cg				(0 0 -0.024)
+		MOI				(0.0118241136 0.0118241136 0.007016506973)
+	}
+
+FinCan+CC+MoterLiner{
 		class		Bodytube
 		length		0.889
 		cg			(0 0 -0.4191)
-		position	(0 0 -3.187946)
-		mass		3
+		position	(0 0 -3.11538)
+		mass		7
 		outerDiameter	0.17
-		surfaceRoughness	0.00006
+		surfaceRoughness	0.000007
 	}
 
-Plumbing{
+LowerBulkheadCasing{
+		class			Mass
+		mass			0.26 #cad
+		position		(0 0 -3.11538) 
+		cg				(0 0 -0.024)
+		MOI				(0.0118241136 0.0118241136 0.007016506973)
+	}
+
+LowerPlumbing{
 	class		Mass
-	mass		1
-	position	(0 0 -3.187946)
+	mass		2.5
+	position	(0 0 -3.11538)
 	cg			(0 0 -0.18)
 	MOI			(0.06 0.06 0.11)
 }
 
-LowerInjectorBulkheadMass{
+LowerInjectorBulkhead{
 		class			Mass
-		mass			0.9682
-		position	(0 0 -3.187946)
+		mass			0.5
+		position	(0 0 -3.11538)
 		cg				(0 0 -0.281)
 		MOI				(0.006138168541 0.006138168541 0.01124359042)
 	}
 
-MotorCasing{
-		class			Mass
-		mass			3.33181818
-		position	(0 0 -3.187946)
-		cg				(0 0 0)
-		MOI				(0.03869200471 0.03869200471 0.07738400941)
-	}
 
 Diskplate{
 		class			Mass
-		mass			0.9682
-		position	(0 0 -3.187946)
+		mass			0.25
+		position	(0 0 -3.11538)
 		cg				(0 0 -0.67)
 		MOI				(0.006138168541 0.006138168541 0.01124359042)
 	}
@@ -317,15 +364,15 @@ Diskplate{
 Nozzle{
 		class			Mass
 		mass			1.68636364
-		position	(0 0 -3.187946)
+		position	(0 0 -3.11538)
 		cg				(0 0 -0.855)
 		MOI				(0.01182100826 0.01182100826 0.01958353859)
 	}
 
 NozzleHousingMass{
 		class			Mass
-		mass			2.955
-		position	(0 0 -3.187946)
+		mass			1
+		position	(0 0 -3.11538)
 		cg				(0 0 -0.855)
 		MOI				(0.0343160604 0.0343160604 0.0686321208)
 	}
@@ -334,7 +381,7 @@ NozzleHousingMass{
 Fins{
 	class			FinSet
 	mass			1.4
-	position			(0 0 -3.628146)
+	position			(0 0 -3.563146)
 	cg			(0 0 -0.075)
 	numFins			3
 	finCantAngle			0
@@ -343,7 +390,7 @@ Fins{
 	rootChord			0.36
 	tipChord			0.119
 	span			0.14
-	thickness			0.009906
+	thickness			0.008128 #0.009906
 	surfaceRoughness			0.000007
 
     LeadingEdge{
@@ -359,12 +406,35 @@ Fins{
     }
 	}
 
+    # BoatTail{
+    #     # Only difference wrt DiameterChange object is that the BoatTail accounts for base drag (when the engine is off)
+    #     class           BoatTail
+    #     mass            0.1
+    #     position        (0 0 -4.076946)
+    #     cg              (0 0 0)
+    #     MOI             (0.01 0.01 0.0001)
+
+    #     length          0.15 # m
+    #     startDiameter   0.17 # m
+    #     endDiameter     0.1 # m
+    #     surfaceRoughness 0.000060 # m
+    #     }
+
 Motor{
         class           Motor
+		path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisCase4.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis4KNXXSB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisXXKN5SB.txt	
+		#path		    C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisXXKN4SB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis4KN3SB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis3P5KN4SB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis3P5KN5SB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis3P5KN5SB.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis3P75SB.txt
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\WizgodMotor4kN4sb.txt
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro4P25SBSAC.txt
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro4P5SBSAC.txt
-		path			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro3P75SB.txt #test
+		#path			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro3P75SB.txt #test
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro3P625SB 2.txt
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\ouroboros7SecondBurn.txt
 		#path 			C:\Users\taiya\anaconda3\envs\SOAR\Lib\site-packages\MAPLEAF\Examples\Motors\Ouro3P625SB 2.txt
@@ -382,5 +452,3 @@ Motor{
   }
 }
 }
-
-#isha was here!

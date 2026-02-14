@@ -1,0 +1,208 @@
+# May Launch 10k Apogee
+# MAPLEAF
+# Sabhu Chaudhry
+# See SimDefinitionTemplate.mapleaf for file format info & description of all options
+SimControl{
+    timeDiscretization RK45Adaptive
+    timeStep 0.01 #sec
+
+    #EndCondition Altitude#Apogee #Altitude
+	#EndConditionValue 800
+
+	EndCondition Apogee
+
+    loggingLevel    2 #0# 2 #0 #2
+    RocketPlot      On
+
+    plot    FlightAnimation CP Mach Aero CG Position Velocity 
+	}
+
+Environment{
+    ConstantMeanWind{
+        velocity                    ( 3 0 0 ) #m/s
+    }
+	LaunchSite{
+        elevation             1120#890#930.58#830.58  #1100 #777.24-883.92m average is 830.58 for Midland Texas,1400.556 #m, Relative to sea level - Impacts the acceleration of gravity at launch        
+
+        # Lat / Lon only influence simulations using the 'Round' or 'WGS84' earth models
+        #latitude                49 # Degrees, 90 = North Pole, -90 = South Pole, 0 = Equator
+        #longitude               81 # Degrees, 0 = Prime Meridian (Greenwich, England), +'ve is East, -'ve is West
+
+        # A launch rail will prevent the rocket from deviating from the direction specified by Rocket.initialDirection
+            # Until it has travelled the length of the launch rail from its starting location
+            # The launch rail will also prevent downwards motion
+            # A length of 0 = no launch rail
+        railLength              2.1 #m
+
+		EarthModel                  Flat
+
+    	#### Atmospheric Properties ####
+    	# USStandardAtmosphere or Constant or TabulatedAtmosphere
+        # USStandardAtmosphere computes the exact US Standard Atmosphere
+    	AtmosphericPropertiesModel  USStandardAtmosphere
+		
+    }
+
+	TurbulenceModel             PinkNoise3D
+    turbulenceOffWhenUnderChute False # Increases time step we can take while descending
+
+    PinkNoiseModel{
+        # To set the strength of pink noise fluctuations, provide the turbulenceIntensity OR the velocityStdDeviation
+            # If both are provided, the turbulenceIntensity is used
+        turbulenceIntensity     5 # % velocity standard deviation / mean wind velocity
+        velocityStdDeviation    5 # m/s standard deviation of pink noise model
+
+        # Set the random seeds for each pink noise generator for repeatable simulations
+            # PinkNoise1D only uses 1, 2D uses 2, 3D uses all 3
+        randomSeed1             63583 # Integer
+        randomSeed2             63583 # Integer
+        randomSeed3             63583 # Integer
+    }
+
+	MeanWindModel              Constant#SampledRadioSondeData #Constant #SampledRadioSondeData
+
+	SampledRadioSondeData{
+        launchMonth             Aug # Three letter month code - uses yearly avg data if absent
+        # Place1 name, weighting coefficient 1, Place2 name, weighting coefficient 2, ... - Corresponding radio sonde data files must be in MAPLEAF/Examples/Wind
+        locationsToSample       Edmonton 1
+        locationASLAltitudes    710 638 # m ASL - Used to convert ASL altitude data provided in radio sonde files to AGL altitudes
+        randomSeed              228010 # Set to remove randomization from sampling, have a repeatable simulation
+    }
+	}
+
+Rocket{
+	name				Toothless
+	#initialDirection	(0 0 1)
+	rotationAxis        (0 1 0) # Any Vector, defined in launch tower ENU frame
+    rotationAngle        3 # degrees
+	position            (0 0 0.1) # m - initial position above ground level (AGL) of the rocket's CG. Set launch site elevation using Environment.LaunchSite.elevation
+    velocity            (0 0 0) # m/s - initial velocity
+    angularVelocity     (0 0 0) # rad/s - initial angular velocity - defined in the rocket's LOCAL frame
+
+	Aero{
+        # To turn off base drag (for comparisons to wind tunnel data), make sure the rocket doesn't include a Boat tail and set this to false
+        addZeroLengthBoatTailsToAccountForBaseDrag      true
+      
+        # Calculates skin friction based on laminar + transitional flow if not fully turbulent
+        fullyTurbulentBL                                true
+	}
+
+    FirstStage{
+        class           Stage
+		stageNumber		1
+		position            (0 0 0) #m - Position of stage tip, relative to tip of rocket
+
+        NoseCone{
+            class		Nosecone
+            mass			0.647 #component mass from openrocket
+            baseDiameter			0.102 #0.1524
+            position			(0 0 0)
+            cg			(0 0 -0.2135) # need
+            aspectRatio			4.1862745098 # length/base diameter
+            shape			tangentOgive
+            surfaceRoughness			0.00002 # openrocket
+        }
+
+        RecoveryTube{
+                class           Bodytube
+                mass            1.664 # OR tube-chutes-camera-av # usinh 640 for both tubes
+                position        (0 0 -0.427) # nosecone 
+                cg              (0 0 -0.343) 
+                    
+                outerDiameter   0.102
+                length          0.686
+
+                surfaceRoughness    0.00002
+        }
+
+        CameraAssembly{
+                class			Mass
+                mass			0.07
+                position		(0 0 -1.217) # recovery + placement in OR
+                cg				(0 0 0)
+                MOI				(0.0118241136 0.0118241136 0.007016506973) # manually calculate
+	    }
+
+        Avionics{
+                class			Mass
+                mass			0.650 
+                position		(0 0 -1.014) # recovery + placement in OR
+                cg				(0 0 0)
+                MOI				(0.0118241136 0.0118241136 0.007016506973) # manually calculate
+	    }
+
+        RecoverySystem{
+                # Stages can have a maximum of one recovery system
+                class           RecoverySystem
+                mass            1.224 # adding chute masses 
+                position        (0 0 -0.99)
+                cg              (0 0 -0.99)
+                numStages       2 
+
+                stage1Trigger       Apogee # Apogee, Time, Altitude
+                stage1ChuteArea     1.27 # m^2 #parachute on OR
+                stage1Cd            0.8 # Drag Coefficient (~0.75-0.8 for flat sheet, 1.5-1.75 for domed chute)
+                stage1DelayTime     0 #s
+                
+                stage2Trigger       Altitude # Apogee, Time, Altitude
+                stage2TriggerValue  213.36  # *metres, sec from launch (Time), m AGL, reached while descending (Altitude), unneeded for Apogee
+                stage2ChuteArea     0.533 # m^2 #patriot 
+                stage2Cd            0.8 # Drag Coefficient (~0.75-0.8 for flat sheet, 1.5-1.75 for domed chute)
+                stage2DelayTime     0 #s
+        }
+
+        BodyTube{
+                class           Bodytube
+                mass            1.056 # tube - fins
+                position        (0 0 -1.113) # nosecone + rectube
+                cg              (0 0 -0.432) 
+                    
+                outerDiameter   0.102
+                length          0.864
+
+                surfaceRoughness    0.00002 #NEED
+        }
+
+        Fins{
+                class             FinSet 
+                mass              0.623 # kg
+                position          (0 0 -1.80) #total rocket length-fins# need to calc # # X-component of the Position of the tip of the FinSet's root chord(s) (on the rocket's centerline)
+                cg                (0 0 0)
+
+                # Fin Placement / Distribution
+                numFins           4
+                finCantAngle      0 # Positive values will induce moments in (local frame) negZ direction. Negative values will induce moments in the (local frame) posZ direction
+                firstFinAngle     0 # deg (Must be between 0 and 90) -  controls circumferential location of fins. 0 will have the first fin spanwise direction aligned with the local X-axis
+                                    # Rest of the fins will be spaced evenly around the rocket
+                                            
+                # Planform ### NEED ###
+                sweepAngle        45 # deg - leading edge sweep angle. 0 = leading edge normal to rocket surface, 90 = no fin at all.
+                rootChord         0.1524 # m
+                tipChord          0.0762 # m - it is assumed that the tip chord is parallel to the root chord
+                span              0.0635 # m - radial (from the perspective of the rocket) distance between fin root and fin tip
+
+                # Other
+                thickness         0.00635 # m - Maximum fin thickness
+                surfaceRoughness  0.0002 # 2 micro
+                LeadingEdge{
+                    shape         Blunt # Blunt or Round (Even sharp edges always have a small radius)
+                    thickness     0.001 # Used for 'Blunt' edge
+                    radius        0.001 # Used for 'Round' edge
+                }
+
+                TrailingEdge{
+                    shape         Blunt # Tapered (0 base drag), Round (1/2 base drag), Blunt (full base drag)
+                    thickness     0.001 # Used for 'Blunt' edge
+                    radius        0.001 # Used for 'Round' edge
+                }
+        }        
+
+Motor{
+        class           Motor ### NEED TO FIND K550 MOTOR FILE ONLINE ###
+        path        C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\aerotech_k550w_mapleaf.txt
+		#path			  /Users/sabhu/Downloads/toothless_motor_398N_4s.txt
+        #path            /Users/sabhu/Downloads/toothless_motor_650N_4s.txt
+        #path            /Users/sabhu/Downloads/aerotech_k550w_mapleaf.txt
+}
+}
+}

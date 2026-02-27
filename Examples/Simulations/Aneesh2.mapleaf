@@ -19,7 +19,7 @@ SimControl{
 
 Environment{
     ConstantMeanWind{
-        velocity        ( 3 0 0 )
+        velocity        ( 0 0 0 )
     }
 
 	LaunchSite{
@@ -75,7 +75,7 @@ Rocket{
 	name				Aegis
 	#initialDirection	(0 0 1)
 	rotationAxis        (0 1 0) # Any Vector, defined in launch tower ENU frame
-    rotationAngle        2 # degrees
+    rotationAngle        3 # degrees
 	position            (0 0 3) # m - initial position above ground level (AGL) of the rocket's CG. Set launch site elevation using Environment.LaunchSite.elevation
     velocity            (0 0 0) # m/s - initial velocity
     angularVelocity     (0 0 0) # rad/s - initial angular velocity - defined in the rocket's LOCAL frame
@@ -99,7 +99,7 @@ NoseConeShell{
 	baseDiameter			0.17 #0.1524
 	position			(0 0 0)
 	cg			(0 0 -0.03)
-	aspectRatio			2.68823529411764705 #2.70836571429 
+	aspectRatio			2.68823529411764705 #2.70836571429 #19.5 inch nosecone/ w 11 inch
 	shape			Aegis Von Karman
 	surfaceRoughness			0.000007
 	}
@@ -109,14 +109,14 @@ Payload{
 		mass			3
 		position		(0 0 -0.46658)
 		cg				(0 0 0)
-		MOI				(0.01891858177 0.01891858177 0.01122641116)
+		MOI				(0.01891858177 0.01891858177 0.01122641116)	
 	}
 
 Ballast{
 		class			Mass
 		mass			0 #might need idk yet
 		position		(0 0 -0.46658)
-		cg				(0 0 0)
+		cg				( 0 0 0)
 		#MOI				(0.01891858177 0.01891858177 0.01122641116)
 	}
 
@@ -422,7 +422,8 @@ Fins{
 
 Motor{
         class           Motor
-		path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisCase4.txt
+		path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisCase67.txt
+		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisCase4.txt
 		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\Aegis4KNXXSB.txt
 		#path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisXXKN5SB.txt	
 		#path		    C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisXXKN4SB.txt

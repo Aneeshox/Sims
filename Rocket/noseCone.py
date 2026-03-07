@@ -125,7 +125,7 @@ class NoseCone(FixedMass, BodyComponent):
             #return 0.01667999947992307
             return 0.0041499838706
         elif self.shape == "Aegis Von Karman":
-            return 0.00518649458172 #Aneesh
+            return 0.00548694432944#0.00518649458172 #Aneesh
 
 
         else:
@@ -154,7 +154,7 @@ class NoseCone(FixedMass, BodyComponent):
             #return 0.04902802579411162*2
             return 0.0451573585563
         elif self.shape == "Aegis Von Karman":
-            return 0.0252965968796*2
+            return 0.0544855289258 #0.0252965968796*2
     
 
         else:
@@ -188,7 +188,7 @@ class NoseCone(FixedMass, BodyComponent):
             #return 0.47206716
 
         elif self.shape == "Aegis Von Karman":
-            return 0.160929230758
+            return 0.172892873615#0.160929230758
 
         else:
             raise TypeError("The nosecone shape {} is not recognized".format(self.shape))

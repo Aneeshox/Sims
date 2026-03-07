@@ -3,6 +3,8 @@
 import abc
 import random
 from math import cos, radians, sin
+import sys
+import requests
 
 import numpy as np
 import pandas as pd
@@ -11,7 +13,7 @@ from scipy.stats import rv_histogram
 from MAPLEAF.IO import defaultConfigValues, getAbsoluteFilePath
 from MAPLEAF.Motion import Vector, linInterp
 
-__all__ = [ "meanWindModelFactory", "ConstantWind", "Hellman", "InterpolatedWind" ]
+__all__ = [ "meanWindModelFactory", "ConstantWind", "Hellman", "InterpolatedWind", "API" ]
 
 # Mean Wind Model Abstract Base Class / Interface Definition
 class MeanWindModel(abc.ABC):
@@ -123,6 +125,24 @@ def meanWindModelFactory(envReader=None, silent=False) -> MeanWindModel:
         altitudes, windVectors = sampler.getRadioSondeWindProfile(locations, weights, locationASLAltitudes, launchMonth, radioSondeRandomSeed)
         
         meanWindModel = InterpolatedWind(windAltitudes=altitudes, winds=windVectors)
+
+    elif meanWindModelType == "API":
+        lat = envReader.getFloat("API.latitude")
+        lon = envReader.getFloat("API.longitude")
+        place = envReader.tryGetString("API.placeName") or ""
+        alpha = envReader.tryGetFloat("API.hellmanAlphaCoeff") or 0.14
+        limit = envReader.tryGetFloat("API.altitudeLimit") or 1500.0
+        ang = envReader.tryGetFloat("API.angleBetweenYAxisandNorth") or 0.0
+
+        meanWindModel = API(
+            latitude=lat,
+            longitude=lon,
+            placeName=place,
+            hellmanAlphaCoeff=alpha,
+            altitudeLimit=limit,
+            angleBetweenYAxisandNorth=ang,
+            silent=silent
+        )
 
     else:
         raise ValueError("Unknown MeanWindModel: {}. Please see SimDefinitionTemplate.txt for available options.".format(meanWindModelType))
@@ -484,6 +504,76 @@ class RadioSondeDataSampler():
 
         return altitudes, windVectors
 
+class API(MeanWindModel):
+    """
+    Fetches current wind at a given latitude/longitude using Open-Meteo (no API key),
+    then returns a wind vector (optionally scaled with altitude using Hellman law).
+
+    Notes:
+      - Open-Meteo "current" values are model-based (15-minutely). It provides a timestamp in the response.
+      - Wind direction is degrees (meteorological, wind blowing FROM).
+    """
+
+    def __init__(
+        self,
+        latitude: float,
+        longitude: float,
+        placeName: str = "",
+        hellmanAlphaCoeff: float = 0.14,
+        altitudeLimit: float = 1500.0,
+        angleBetweenYAxisandNorth: float = 0.0,
+        timeout_s: float = 5.0,
+        silent: bool = False,
+    ):
+        self.latitude = float(latitude)
+        self.longitude = float(longitude)
+        self.placeName = placeName
+        self.hellmanAlphaCoeff = float(hellmanAlphaCoeff)
+        self.altitudeLimit = float(altitudeLimit)
+        self.angleBetweenYAxisandNorth = float(angleBetweenYAxisandNorth)
+        self.timeout_s = float(timeout_s)
+        self.silent = silent
+
+        self.groundMeanWind = Vector(0, 0, 0)
+        self.dataTimestampISO8601 = None  # Open-Meteo "current.time"
+        self._fetchCurrentWind()
+
+def _fetchCurrentWind(self):
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": self.latitude,
+        "longitude": self.longitude,
+        "current": "wind_speed_10m,wind_direction_10m",
+        "wind_speed_unit": "ms",
+        "timezone": "UTC",
+    }
+
+    r = requests.get(url, params=params, timeout=self.timeout_s)
+    r.raise_for_status()
+    data = r.json()
+
+    if "current" not in data:
+        raise RuntimeError(f"Open-Meteo response missing 'current': {data}")
+
+    current = data["current"]
+    if "wind_speed_10m" not in current or "wind_direction_10m" not in current:
+        raise RuntimeError(f"Open-Meteo response missing wind fields: {data}")
+
+    windSpeed = float(current["wind_speed_10m"])
+    windHeadingFrom = float(current["wind_direction_10m"])
+    self.dataTimestampISO8601 = current.get("time", None)
+
+    windDirToVec = _convertWindHeadingToXYPlaneWindDirection(
+        windHeadingFrom,
+        AngleBetweenYAxisandNorth=self.angleBetweenYAxisandNorth
+    )
+    self.groundMeanWind = windDirToVec * windSpeed
+    print(f"[API RAW 10m WIND] Vector = ({self.groundMeanWind.X:.3f}, {self.groundMeanWind.Y:.3f}, {self.groundMeanWind.Z:.3f}) m/s")
+    def getMeanWind(self, AGLAltitude):
+        # Apply Hellman scaling (same behavior as your Hellman class)
+        HellmanAltitude = max(min(self.altitudeLimit, AGLAltitude), 10)
+        return self.groundMeanWind * (HellmanAltitude / 10) ** self.hellmanAlphaCoeff
+    
 def _convertWindHeadingToXYPlaneWindDirection(heading, AngleBetweenYAxisandNorth=0):
     '''
         Reminder: wind rose indicates where wind is blowing FROM

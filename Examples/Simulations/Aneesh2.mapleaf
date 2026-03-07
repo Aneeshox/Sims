@@ -11,7 +11,7 @@ SimControl{
 
 	 EndCondition Apogee
 
-    loggingLevel    2 #0# 2 #0 #2
+    loggingLevel    3 #0# 2 #0 #2
     RocketPlot      On
 
     plot    FlightAnimation CP Mach Aero CG Position Velocity AOA
@@ -19,7 +19,7 @@ SimControl{
 
 Environment{
     ConstantMeanWind{
-        velocity        ( 0 0 0 )
+        velocity        ( 5 5 0 )
     }
 
 	LaunchSite{
@@ -75,7 +75,7 @@ Rocket{
 	name				Aegis
 	#initialDirection	(0 0 1)
 	rotationAxis        (0 1 0) # Any Vector, defined in launch tower ENU frame
-    rotationAngle        3 # degrees
+    rotationAngle        8 # degrees
 	position            (0 0 3) # m - initial position above ground level (AGL) of the rocket's CG. Set launch site elevation using Environment.LaunchSite.elevation
     velocity            (0 0 0) # m/s - initial velocity
     angularVelocity     (0 0 0) # rad/s - initial angular velocity - defined in the rocket's LOCAL frame
@@ -109,7 +109,8 @@ Payload{
 		mass			3
 		position		(0 0 -0.46658)
 		cg				(0 0 0)
-		MOI				(0.01891858177 0.01891858177 0.01122641116)	
+		#MOI				(0.01891858177 0.01891858177 0.01122641116)
+		MOI 			(0.040534, 0.040534, 0.043442)
 	}
 
 Ballast{
@@ -133,8 +134,8 @@ Coupler{
 RecoverySystem{
 		class			RecoverySystem
 		mass			0.7
-		position		(0 0 -0.1)
-		cg				(0 0 -0.1)
+		position		(0 0 -0.5)
+		cg				(0 0 -0.5)
 		numStages 		2
 		stage1Trigger       Apogee # Apogee, Time, Altitude
         stage1ChuteArea     4.67 # m^2
@@ -152,7 +153,8 @@ RecoveryBulkhead{
 		mass			0.467
 		position		(0 0 -1.0694)
 		cg				(0 0 0) #chutes are given the exact same location and cg as recovery system
-		MOI				(0.00567557453 0.00567557453 0.003367923348)#each mass component is modeled as a solid cylinder with diam 0.15m and length 0.2m
+		MOI 			(0.001489 0.002811 0.001474)
+		#MOI				(0.00567557453 0.00567557453 0.003367923348)#each mass component is modeled as a solid cylinder with diam 0.15m and length 0.2m
 	}
 
 Chutes{
@@ -290,6 +292,7 @@ PressureVessel{
 		mass			6.1 #8.8
 		outerDiameter		0.17
 		surfaceRoughness	0.000143
+		MOI 			(0.422204 0.422204 0.172753)
 	}
 
 LowerPVBulkhead{

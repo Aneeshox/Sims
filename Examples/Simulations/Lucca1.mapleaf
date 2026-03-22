@@ -14,7 +14,7 @@ SimControl{
     loggingLevel    2 #0# 2 #0 #2
     RocketPlot      On
 
-    plot    FlightAnimation CP Mach Aero CG Position Velocity AOA
+    plot    FlightAnimation CP Mach Aero CG Position Velocity AOA Mass
 	}
 
 Environment{
@@ -192,22 +192,21 @@ CameraAssembly{
 		MOI				(0.00056 0.00034 0.00062)
 	}
 
-# # AirbrakesForce{
-#         # Acts like an AeroForce object, but all coefficients are interpolated from a table instead of constants
-#         class           TabulatedAeroForce
-#         position        (0 0 -1.6494)
-#         Aref            0.25 #todo
-#         Lref            0.25 #todo
-
-#         # File should be a .csv file containing columns of 'key' data followed by columns of 'value' data (Key columns must be named: 
-#             # Mach, Altitude, UnitReynolds, AOA, or RollAngle - defined in MAPLEAF/Rocket/AeroFunctions.stringToAeroFunctionMap)
-#             # (Value data columns must be named: CD, CL, CMx, CMy, or CMz    
-#         # Files can have as many of those 'key' and 'value' columns as desired, 
-#                 # but interpolation will slow down as dimensionality (number of key columns) increases
-#         # First row of the file needs to be a header listing each column name - each column name has to match one of the above 'key' or 'value' columns
-#             # Example header for interpolating Cd based on Mach number: 'Mach,Cd'
-#         filePath        ./MAPLEAF/Examples/Simulations/twoStageRocketAeroTable.csv
-#         }
+AirbrakesForce{
+        # Acts like an AeroForce object, but all coefficients are interpolated from a table instead of constants
+        class           TabulatedAeroForce
+        position        (0 0 -1.4094)
+        Aref            0.022 #todo
+        Lref            0.167#todo
+        # File should be a .csv file containing columns of 'key' data followed by columns of 'value' data (Key columns must be named: 
+            # Mach, Altitude, UnitReynolds, AOA, or RollAngle - defined in MAPLEAF/Rocket/AeroFunctions.stringToAeroFunctionMap)
+            # (Value data columns must be named: CD, CL, CMx, CMy, or CMz    
+        # Files can have as many of those 'key' and 'value' columns as desired, 
+                # but interpolation will slow down as dimensionality (number of key columns) increases
+        # First row of the file needs to be a header listing each column name - each column name has to match one of the above 'key' or 'value' columns
+            # Example header for interpolating Cd based on Mach number: 'Mach,Cd'
+        filePath        C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\TabulatedData\Airbrakes.csv
+        }
 
 AirbrakesTube{
 		length			0.071374
@@ -352,17 +351,17 @@ Nozzle+Houseing{
 	}
 
 
-Fins{
+DeltaFins{
 	class			FinSet
 	mass			1.4
-	position			(0 0 -3.429)
+	position			(0 0 -3.339)
 	cg			(0 0 -0.075)
 	numFins			3
 	finCantAngle			0
 	firstFinAngle			0
-	sweepAngle			40.7
-	rootChord			0.36
-	tipChord			0.119
+	sweepAngle			53
+	rootChord			0.45
+	tipChord			0.264
 	span			0.14
 	thickness			0.008128 #0.009906
 	surfaceRoughness			0.000007
@@ -380,28 +379,6 @@ Fins{
     }
 	}
 
-    # BoatTail{
-    #     # Only difference wrt DiameterChange object is that the BoatTail accounts for base drag (when the engine is off)
-    #     class           BoatTail
-    #     mass            0.1
-    #     position        (0 0 -4.076946)
-    #     cg              (0 0 0)
-    #     MOI             (0.01 0.01 0.0001)
-
-    #     length          0.15 # m
-    #     startDiameter   0.17 # m
-    #     endDiameter     0.1 # m
-    #     surfaceRoughness 0.000060 # m
-    #     }
-AegisPenis{
-		length				0.03675634
-		class				Bodytube
-		position			(0 0 -3.814845)
-		cg					(0 0 -0.1)
-		mass				0
-		outerDiameter		0.0983996
-		surfaceRoughness	0.000007 #resin finish
-	}
 Motor{
         class           Motor
 		path			C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\AegisCase67.txt

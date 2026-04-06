@@ -19,7 +19,7 @@ SimControl{
 
 Environment{
     ConstantMeanWind{
-        velocity        ( 3 0 0 )
+        velocity        ( 2 1 0 )
     }
 
 	LaunchSite{
@@ -75,7 +75,7 @@ Rocket{
 	name				Aegis
 	#initialDirection	(0 0 1)
 	rotationAxis        (0 1 0) # Any Vector, defined in launch tower ENU frame
-    rotationAngle        3 # degrees
+    rotationAngle        4 # degrees
 	position            (0 0 3) # m - initial position above ground level (AGL) of the rocket's CG. Set launch site elevation using Environment.LaunchSite.elevation
     velocity            (0 0 0) # m/s - initial velocity
     angularVelocity     (0 0 0) # rad/s - initial angular velocity - defined in the rocket's LOCAL frame
@@ -192,21 +192,21 @@ CameraAssembly{
 		MOI				(0.00056 0.00034 0.00062)
 	}
 
-AirbrakesForce{
-        # Acts like an AeroForce object, but all coefficients are interpolated from a table instead of constants
-        class           TabulatedAeroForce
-        position        (0 0 -1.4094)
-        Aref            4.022 #todo
-        Lref            4.167#todo
-        # File should be a .csv file containing columns of 'key' data followed by columns of 'value' data (Key columns must be named: 
-            # Mach, Altitude, UnitReynolds, AOA, or RollAngle - defined in MAPLEAF/Rocket/AeroFunctions.stringToAeroFunctionMap)
-            # (Value data columns must be named: CD, CL, CMx, CMy, or CMz    
-        # Files can have as many of those 'key' and 'value' columns as desired, 
-                # but interpolation will slow down as dimensionality (number of key columns) increases
-        # First row of the file needs to be a header listing each column name - each column name has to match one of the above 'key' or 'value' columns
-            # Example header for interpolating Cd based on Mach number: 'Mach,Cd'
-        filePath        C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\TabulatedData\Airbrakes.csv
-        }
+# AirbrakesForce{
+#         # Acts like an AeroForce object, but all coefficients are interpolated from a table instead of constants
+#         class           TabulatedAeroForce
+#         position        (0 0 -1.4094)
+#         Aref            4.022 #todo
+#         Lref            4.167#todo
+#         # File should be a .csv file containing columns of 'key' data followed by columns of 'value' data (Key columns must be named: 
+#             # Mach, Altitude, UnitReynolds, AOA, or RollAngle - defined in MAPLEAF/Rocket/AeroFunctions.stringToAeroFunctionMap)
+#             # (Value data columns must be named: CD, CL, CMx, CMy, or CMz    
+#         # Files can have as many of those 'key' and 'value' columns as desired, 
+#                 # but interpolation will slow down as dimensionality (number of key columns) increases
+#         # First row of the file needs to be a header listing each column name - each column name has to match one of the above 'key' or 'value' columns
+#             # Example header for interpolating Cd based on Mach number: 'Mach,Cd'
+#         filePath        C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\TabulatedData\Airbrakes.csv
+#         }
 
 AirbrakesTube{
 		length			0.071374
@@ -363,7 +363,7 @@ DeltaFins{
 	rootChord			0.45
 	tipChord			0.264
 	span			0.14
-	thickness			0.008128 #0.009906
+	thickness			0.008128 #0.011938# 0.47 inches #0.008128 #0.009906
 	surfaceRoughness			0.000007
 
     LeadingEdge{

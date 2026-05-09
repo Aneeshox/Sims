@@ -356,7 +356,17 @@ class Simulation():
 
             # Create a new folder for the results of the current simulation
             periodIndex = simDefinition.fileName.rfind('.')
-            resultsFolderBaseName = simDefinition.fileName[:periodIndex] + "_Run"
+            #resultsFolderBaseName = simDefinition.fileName[:periodIndex] + "_Run"
+            
+            baseOutputDir = r"C:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Simulation_PostSim_logs"
+            os.makedirs(baseOutputDir, exist_ok=True)
+
+            simName = os.path.basename(simDefinition.fileName[:periodIndex])
+
+            resultsFolderBaseName = os.path.join(
+                baseOutputDir,
+                simName + "_Run"
+            )
 
             def tryCreateResultsFolder(resultsFolderBaseName):
                 resultsFolderName = Logging.findNextAvailableNumberedFileName(fileBaseName=resultsFolderBaseName, extension="")

@@ -1,0 +1,463 @@
+# MAPLEAF
+# File: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1_continue.mapleaf
+# Autowritten on: 2026-05-06 20:26:53.020160
+
+DependentVariables{
+
+	Rocket{
+
+		FirstStage{
+
+			PressureVessel{
+				MOI	(!0.01055*pvMass! !0.01055*pvMass! !0.00431*pvMass!)
+			}
+		}
+	}
+}
+
+Environment{
+
+	ConstantMeanWind{
+		velocity	( 2 1 0 )
+	}
+
+	LaunchSite{
+		AtmosphericPropertiesModel	USStandardAtmosphere
+		EarthModel	Flat
+		elevation	871.603032
+		railLength	12.192
+	}
+
+	MeanWindModel	Constant
+
+	PinkNoiseModel{
+		randomSeed1	63583
+		randomSeed2	63583
+		randomSeed3	63583
+		turbulenceIntensity	5
+		velocityStdDeviation	5
+	}
+
+	SampledRadioSondeData{
+		launchMonth	Aug
+		locationASLAltitudes	710 638
+		locationsToSample	Edmonton 1
+		randomSeed	228010
+	}
+
+	TurbulenceModel	PinkNoise3D
+	turbulenceOffWhenUnderChute	False
+}
+
+MonteCarlo{
+	numberRuns	21
+	output	apogees maxSpeeds flightTimes
+}
+
+Optimization{
+
+	IndependentVariables{
+
+		InitialParticlePositions{
+			bestCost	1.2854295063907557
+			bestPosition	54.86776131780259
+
+			p0{
+				pvMass	42.251579490524875
+			}
+
+			p1{
+				pvMass	54.24386277808099
+			}
+
+			p10{
+				pvMass	54.439450671635974
+			}
+
+			p11{
+				pvMass	43.85787265991077
+			}
+
+			p12{
+				pvMass	56.73439660360549
+			}
+
+			p13{
+				pvMass	56.747116195264624
+			}
+
+			p14{
+				pvMass	50.294490885578256
+			}
+
+			p15{
+				pvMass	53.723012288913694
+			}
+
+			p16{
+				pvMass	41.16001892970384
+			}
+
+			p17{
+				pvMass	47.50976324545999
+			}
+
+			p18{
+				pvMass	45.13541445287645
+			}
+
+			p19{
+				pvMass	55.32968256462178
+			}
+
+			p2{
+				pvMass	47.26817158521962
+			}
+
+			p3{
+				pvMass	48.083810836407125
+			}
+
+			p4{
+				pvMass	42.8928603188603
+			}
+
+			p5{
+				pvMass	50.038549014048115
+			}
+
+			p6{
+				pvMass	55.57677036629537
+			}
+
+			p7{
+				pvMass	43.89916705706388
+			}
+
+			p8{
+				pvMass	49.928557866000546
+			}
+
+			p9{
+				pvMass	49.55232644690821
+			}
+		}
+
+		pvMass	38 < Rocket.FirstStage.PressureVessel.mass < 58
+	}
+
+	ParticleSwarm{
+		cognitiveParam	0.5
+		inertiaParam	0.9
+		nIterations	25
+		nParticles	20
+		socialParam	0.6
+	}
+
+	costFunction	abs(apogee-3048)
+	method	PSO
+	showConvergencePlot	True
+}
+
+Rocket{
+
+	Aero{
+		addZeroLengthBoatTailsToAccountForBaseDrag	True
+		fullyTurbulentBL	true
+	}
+
+	FirstStage{
+
+		Airbrakes{
+			MOI	(0.0056, 0.00549, 0.00943)
+			cg	(0 0 -0.4313)
+			class	Mass
+			mass	0
+			position	(0 0 -1.38557)
+		}
+
+		AirbrakesTube{
+			cg	(0 0 -0.1)
+			class	Bodytube
+			length	0.071374
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -1.38557)
+			surfaceRoughness	0.000007
+		}
+
+		Avionics{
+			MOI	(0.04804 0.04921 0.00845)
+			cg	(0 0 -0.350796)
+			class	Mass
+			mass	0
+			position	(0 0 -1.456944)
+		}
+
+		AvionicsTube+UpperPlumbing{
+			cg	(0 0 -0.2664206)
+			class	Bodytube
+			length	0.65532
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -1.456944)
+			surfaceRoughness	0.000007
+		}
+
+		Ballast{
+			cg	( 0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -0.46658)
+		}
+
+		CameraAssembly{
+			MOI	(0.00056 0.00034 0.00062)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -1.1926)
+		}
+
+		CameraTube{
+			cg	(0 0 -0.15113)
+			class	Bodytube
+			length	0.30226
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -1.08331)
+			surfaceRoughness	0.000007
+		}
+
+		Chutes{
+			MOI	(0.00567557453 0.00567557453 0.003367923348)
+			cg	(0 0 -0.154305)
+			class	Mass
+			mass	0
+			position	(0 0 -0.7747)
+		}
+
+		DeltaFins{
+
+			LeadingEdge{
+				radius	0.007239
+				shape	Round
+			}
+
+			TrailingEdge{
+				radius	0.007239
+				shape	Round
+			}
+
+			cg	(0 0 -0.075)
+			class	FinSet
+			finCantAngle	0
+			firstFinAngle	0
+			mass	0
+			numFins	3
+			position	(0 0 -3.339)
+			rootChord	0.45
+			span	0.14
+			surfaceRoughness	0.000007
+			sweepAngle	53
+			thickness	0.014478
+			tipChord	0.264
+		}
+
+		FinCan+CC+MoterLiner{
+			cg	(0 0 -0.3175)
+			class	Bodytube
+			length	0.635
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -3.179845)
+			surfaceRoughness	0.000007
+		}
+
+		LowerInjectorBulkhead{
+			MOI	(0.00057 0.00057 0.00104)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -3.11538)
+		}
+
+		LowerPVBulkhead{
+			MOI	(0.00097 0.00097 0.00170)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -2.916)
+		}
+
+		LowerPVCasing{
+			cg	(0 0 0.004576572)
+			class	Bodytube
+			length	0.009525
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -2.934789)
+			surfaceRoughness	0.000007
+		}
+
+		LowerPlumbing{
+			MOI	(0.01179 0.01223 0.00261)
+			cg	(0 0 -3.05534)
+			class	Mass
+			mass	0
+			position	(0 0 0)
+		}
+
+		LowerPlumbingTube{
+			cg	(0 0 -0.1177655)
+			class	Bodytube
+			length	0.235531
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -2.944314)
+			surfaceRoughness	0.000007
+		}
+
+		Mixingplate{
+			MOI	(0.00033 0.00033 0.00064)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -3.6406)
+		}
+
+		Motor{
+			class	Motor
+			path	c:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\3p25-10k.txt
+		}
+
+		NoseConeShell+Coupler{
+			aspectRatio	3
+			baseDiameter	0.167
+			cg	(0 0 -0.599)
+			class	Nosecone
+			mass	0
+			position	(0 0 0)
+			shape	Aegis Von Karman
+			surfaceRoughness	0.000007
+		}
+
+		NoseConeTip{
+			MOI	(0.0004 0.0004 0.0002)
+			cg	(0 0 -0.081)
+			class	Mass
+			mass	0
+			position	(0 0 0)
+		}
+
+		Noseconetube{
+			cg	(0 0 -0.3048)
+			class	Bodytube
+			length	0.2737
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -0.501)
+			surfaceRoughness	0.000007
+		}
+
+		Nozzle+Houseing{
+			MOI	(0.00412 0.00412 0.00643)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -3.7886)
+		}
+
+		Payload{
+			MOI	(0.03486 0.03485 0.00780)
+			cg	(0 0 -0.08242)
+			class	Mass
+			mass	0
+			position	(0 0 -0.46658)
+		}
+
+		PressureVessel{
+			MOI	(0.422204 0.422204 0.172753)
+			cg	(0 0 -0.4065)
+			class	Bodytube
+			length	0.813
+			mass	40
+			outerDiameter	0.167
+			position	(0 0 -2.121789)
+			surfaceRoughness	0.000143
+		}
+
+		RecoverySystem{
+			cg	(0 0 -1.0448)
+			class	RecoverySystem
+			mass	0
+			numStages	2
+			position	(0 0 0)
+			stage1Cd	0.97
+			stage1ChuteArea	4.67
+			stage1DelayTime	0.1
+			stage1Trigger	Apogee
+			stage2Cd	2.2
+			stage2ChuteArea	18.679
+			stage2DelayTime	0.1
+			stage2Trigger	Altitude
+			stage2TriggerValue	1307.2
+		}
+
+		RecoveryTube{
+			cg	(0 0 -0.154305)
+			class	Bodytube
+			length	0.30861
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -0.7747)
+			surfaceRoughness	0.000007
+		}
+
+		UpperPVBulkhead{
+			MOI	(0.00095 0.00095 0.00174)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -2.14330)
+		}
+
+		UpperPVCasing{
+			cg	(0 0 -0.014186)
+			class	Bodytube
+			length	0.009525
+			mass	0
+			outerDiameter	0.167
+			position	(0 0 -2.112264)
+			surfaceRoughness	0.000007
+		}
+
+		UpperPlumbing{
+			MOI	(0.00294 0.00287 0.00261)
+			cg	(0 0 0)
+			class	Mass
+			mass	0
+			position	(0 0 -2.07707)
+		}
+
+		class	Stage
+		position	(0 0 0)
+		stageNumber	1
+	}
+
+	angularVelocity	(0 0 0)
+	name	Aegis
+	position	(0 0 3)
+	rotationAngle	4
+	rotationAxis	(0 1 0)
+	velocity	(0 0 0)
+}
+
+SimControl{
+	EndCondition	Apogee
+	RocketPlot	Off
+	loggingLevel	2
+	plot	None
+	timeDiscretization	RK45Adaptive
+	timeStep	0.01
+}

@@ -1,0 +1,811 @@
+# Using sim definition file: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1.mapleaf
+
+---- Start Sim Definition File ----
+File: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1.mapleaf
+SimControl.timeDiscretization: RK45Adaptive
+SimControl.timeStep: 0.01
+SimControl.EndCondition: Apogee
+SimControl.loggingLevel: 2
+SimControl.RocketPlot: Off
+SimControl.plot: None
+Environment.ConstantMeanWind.velocity: ( 2 1 0 )
+Environment.LaunchSite.elevation: 871.603032
+Environment.LaunchSite.railLength: 12.192
+Environment.LaunchSite.EarthModel: Flat
+Environment.LaunchSite.AtmosphericPropertiesModel: USStandardAtmosphere
+Environment.TurbulenceModel: PinkNoise3D
+Environment.turbulenceOffWhenUnderChute: False
+Environment.PinkNoiseModel.turbulenceIntensity: 5
+Environment.PinkNoiseModel.velocityStdDeviation: 5
+Environment.PinkNoiseModel.randomSeed1: 63583
+Environment.PinkNoiseModel.randomSeed2: 63583
+Environment.PinkNoiseModel.randomSeed3: 63583
+Environment.MeanWindModel: Constant
+Environment.SampledRadioSondeData.launchMonth: Aug
+Environment.SampledRadioSondeData.locationsToSample: Edmonton 1
+Environment.SampledRadioSondeData.locationASLAltitudes: 710 638
+Environment.SampledRadioSondeData.randomSeed: 228010
+MonteCarlo.numberRuns: 21
+MonteCarlo.output: apogees maxSpeeds flightTimes
+Optimization.method: PSO
+Optimization.costFunction: abs(apogee-3048)
+Optimization.IndependentVariables.pvMass: 38 < Rocket.FirstStage.PressureVessel.mass < 58
+Optimization.IndependentVariables.InitialParticlePositions.Init1.pvMass: 40
+Optimization.IndependentVariables.InitialParticlePositions.Init2.pvMass: 45
+Optimization.IndependentVariables.InitialParticlePositions.Init3.pvMass: 50
+Optimization.IndependentVariables.InitialParticlePositions.Init4.pvMass: 55
+Optimization.ParticleSwarm.nParticles: 20
+Optimization.ParticleSwarm.nIterations: 25
+Optimization.ParticleSwarm.cognitiveParam: 0.5
+Optimization.ParticleSwarm.socialParam: 0.6
+Optimization.ParticleSwarm.inertiaParam: 0.9
+Optimization.showConvergencePlot: True
+DependentVariables.Rocket.FirstStage.PressureVessel.MOI: (0.4939515900719917 0.4939515900719917 0.20179444106258615)
+Rocket.name: Aegis
+Rocket.rotationAxis: (0 1 0)
+Rocket.rotationAngle: 4
+Rocket.position: (0 0 3)
+Rocket.velocity: (0 0 0)
+Rocket.angularVelocity: (0 0 0)
+Rocket.Aero.addZeroLengthBoatTailsToAccountForBaseDrag: True
+Rocket.Aero.fullyTurbulentBL: true
+Rocket.FirstStage.class: Stage
+Rocket.FirstStage.stageNumber: 1
+Rocket.FirstStage.position: (0 0 0)
+Rocket.FirstStage.NoseConeShell+Coupler.class: Nosecone
+Rocket.FirstStage.NoseConeShell+Coupler.mass: 0
+Rocket.FirstStage.NoseConeShell+Coupler.baseDiameter: 0.167
+Rocket.FirstStage.NoseConeShell+Coupler.position: (0 0 0)
+Rocket.FirstStage.NoseConeShell+Coupler.cg: (0 0 -0.599)
+Rocket.FirstStage.NoseConeShell+Coupler.aspectRatio: 3
+Rocket.FirstStage.NoseConeShell+Coupler.shape: Aegis Von Karman
+Rocket.FirstStage.NoseConeShell+Coupler.surfaceRoughness: 0.000007
+Rocket.FirstStage.NoseConeTip.class: Mass
+Rocket.FirstStage.NoseConeTip.mass: 0
+Rocket.FirstStage.NoseConeTip.position: (0 0 0)
+Rocket.FirstStage.NoseConeTip.cg: (0 0 -0.081)
+Rocket.FirstStage.NoseConeTip.MOI: (0.0004 0.0004 0.0002)
+Rocket.FirstStage.Payload.class: Mass
+Rocket.FirstStage.Payload.mass: 0
+Rocket.FirstStage.Payload.position: (0 0 -0.46658)
+Rocket.FirstStage.Payload.cg: (0 0 -0.08242)
+Rocket.FirstStage.Payload.MOI: (0.03486 0.03485 0.00780)
+Rocket.FirstStage.Ballast.class: Mass
+Rocket.FirstStage.Ballast.mass: 0
+Rocket.FirstStage.Ballast.position: (0 0 -0.46658)
+Rocket.FirstStage.Ballast.cg: ( 0 0 0)
+Rocket.FirstStage.Noseconetube.length: 0.2737
+Rocket.FirstStage.Noseconetube.class: Bodytube
+Rocket.FirstStage.Noseconetube.cg: (0 0 -0.3048)
+Rocket.FirstStage.Noseconetube.position: (0 0 -0.501)
+Rocket.FirstStage.Noseconetube.mass: 0
+Rocket.FirstStage.Noseconetube.outerDiameter: 0.167
+Rocket.FirstStage.Noseconetube.surfaceRoughness: 0.000007
+Rocket.FirstStage.RecoveryTube.length: 0.30861
+Rocket.FirstStage.RecoveryTube.class: Bodytube
+Rocket.FirstStage.RecoveryTube.cg: (0 0 -0.154305)
+Rocket.FirstStage.RecoveryTube.position: (0 0 -0.7747)
+Rocket.FirstStage.RecoveryTube.mass: 0
+Rocket.FirstStage.RecoveryTube.outerDiameter: 0.167
+Rocket.FirstStage.RecoveryTube.surfaceRoughness: 0.000007
+Rocket.FirstStage.Chutes.class: Mass
+Rocket.FirstStage.Chutes.mass: 0
+Rocket.FirstStage.Chutes.cg: (0 0 -0.154305)
+Rocket.FirstStage.Chutes.position: (0 0 -0.7747)
+Rocket.FirstStage.Chutes.MOI: (0.00567557453 0.00567557453 0.003367923348)
+Rocket.FirstStage.RecoverySystem.class: RecoverySystem
+Rocket.FirstStage.RecoverySystem.mass: 0
+Rocket.FirstStage.RecoverySystem.position: (0 0 0)
+Rocket.FirstStage.RecoverySystem.cg: (0 0 -1.0448)
+Rocket.FirstStage.RecoverySystem.numStages: 2
+Rocket.FirstStage.RecoverySystem.stage1Trigger: Apogee
+Rocket.FirstStage.RecoverySystem.stage1ChuteArea: 4.67
+Rocket.FirstStage.RecoverySystem.stage1Cd: 0.97
+Rocket.FirstStage.RecoverySystem.stage1DelayTime: 0.1
+Rocket.FirstStage.RecoverySystem.stage2Trigger: Altitude
+Rocket.FirstStage.RecoverySystem.stage2TriggerValue: 1307.2
+Rocket.FirstStage.RecoverySystem.stage2ChuteArea: 18.679
+Rocket.FirstStage.RecoverySystem.stage2Cd: 2.2
+Rocket.FirstStage.RecoverySystem.stage2DelayTime: 0.1
+Rocket.FirstStage.CameraTube.length: 0.30226
+Rocket.FirstStage.CameraTube.class: Bodytube
+Rocket.FirstStage.CameraTube.cg: (0 0 -0.15113)
+Rocket.FirstStage.CameraTube.position: (0 0 -1.08331)
+Rocket.FirstStage.CameraTube.mass: 0
+Rocket.FirstStage.CameraTube.outerDiameter: 0.167
+Rocket.FirstStage.CameraTube.surfaceRoughness: 0.000007
+Rocket.FirstStage.CameraAssembly.class: Mass
+Rocket.FirstStage.CameraAssembly.mass: 0
+Rocket.FirstStage.CameraAssembly.position: (0 0 -1.1926)
+Rocket.FirstStage.CameraAssembly.cg: (0 0 0)
+Rocket.FirstStage.CameraAssembly.MOI: (0.00056 0.00034 0.00062)
+Rocket.FirstStage.AirbrakesTube.length: 0.071374
+Rocket.FirstStage.AirbrakesTube.class: Bodytube
+Rocket.FirstStage.AirbrakesTube.position: (0 0 -1.38557)
+Rocket.FirstStage.AirbrakesTube.cg: (0 0 -0.1)
+Rocket.FirstStage.AirbrakesTube.mass: 0
+Rocket.FirstStage.AirbrakesTube.outerDiameter: 0.167
+Rocket.FirstStage.AirbrakesTube.surfaceRoughness: 0.000007
+Rocket.FirstStage.Airbrakes.class: Mass
+Rocket.FirstStage.Airbrakes.mass: 0
+Rocket.FirstStage.Airbrakes.position: (0 0 -1.38557)
+Rocket.FirstStage.Airbrakes.cg: (0 0 -0.4313)
+Rocket.FirstStage.Airbrakes.MOI: (0.0056, 0.00549, 0.00943)
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.length: 0.65532
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.class: Bodytube
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.cg: (0 0 -0.2664206)
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.position: (0 0 -1.456944)
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.mass: 0
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.outerDiameter: 0.167
+Rocket.FirstStage.AvionicsTube+UpperPlumbing.surfaceRoughness: 0.000007
+Rocket.FirstStage.Avionics.class: Mass
+Rocket.FirstStage.Avionics.mass: 0
+Rocket.FirstStage.Avionics.position: (0 0 -1.456944)
+Rocket.FirstStage.Avionics.cg: (0 0 -0.350796)
+Rocket.FirstStage.Avionics.MOI: (0.04804 0.04921 0.00845)
+Rocket.FirstStage.UpperPlumbing.class: Mass
+Rocket.FirstStage.UpperPlumbing.mass: 0
+Rocket.FirstStage.UpperPlumbing.cg: (0 0 0)
+Rocket.FirstStage.UpperPlumbing.position: (0 0 -2.07707)
+Rocket.FirstStage.UpperPlumbing.MOI: (0.00294 0.00287 0.00261)
+Rocket.FirstStage.UpperPVCasing.length: 0.009525
+Rocket.FirstStage.UpperPVCasing.class: Bodytube
+Rocket.FirstStage.UpperPVCasing.cg: (0 0 -0.014186)
+Rocket.FirstStage.UpperPVCasing.position: (0 0 -2.112264)
+Rocket.FirstStage.UpperPVCasing.mass: 0
+Rocket.FirstStage.UpperPVCasing.outerDiameter: 0.167
+Rocket.FirstStage.UpperPVCasing.surfaceRoughness: 0.000007
+Rocket.FirstStage.UpperPVBulkhead.class: Mass
+Rocket.FirstStage.UpperPVBulkhead.mass: 0
+Rocket.FirstStage.UpperPVBulkhead.position: (0 0 -2.14330)
+Rocket.FirstStage.UpperPVBulkhead.cg: (0 0 0)
+Rocket.FirstStage.UpperPVBulkhead.MOI: (0.00095 0.00095 0.00174)
+Rocket.FirstStage.PressureVessel.length: 0.813
+Rocket.FirstStage.PressureVessel.class: Bodytube
+Rocket.FirstStage.PressureVessel.cg: (0 0 -0.4065)
+Rocket.FirstStage.PressureVessel.position: (0 0 -2.121789)
+Rocket.FirstStage.PressureVessel.mass: 46.82005593099447
+Rocket.FirstStage.PressureVessel.outerDiameter: 0.167
+Rocket.FirstStage.PressureVessel.surfaceRoughness: 0.000143
+Rocket.FirstStage.PressureVessel.MOI: (0.422204 0.422204 0.172753)
+Rocket.FirstStage.LowerPVCasing.length: 0.009525
+Rocket.FirstStage.LowerPVCasing.class: Bodytube
+Rocket.FirstStage.LowerPVCasing.cg: (0 0 0.004576572)
+Rocket.FirstStage.LowerPVCasing.position: (0 0 -2.934789)
+Rocket.FirstStage.LowerPVCasing.mass: 0
+Rocket.FirstStage.LowerPVCasing.outerDiameter: 0.167
+Rocket.FirstStage.LowerPVCasing.surfaceRoughness: 0.000007
+Rocket.FirstStage.LowerPVBulkhead.class: Mass
+Rocket.FirstStage.LowerPVBulkhead.mass: 0
+Rocket.FirstStage.LowerPVBulkhead.position: (0 0 -2.916)
+Rocket.FirstStage.LowerPVBulkhead.cg: (0 0 0)
+Rocket.FirstStage.LowerPVBulkhead.MOI: (0.00097 0.00097 0.00170)
+Rocket.FirstStage.LowerPlumbingTube.class: Bodytube
+Rocket.FirstStage.LowerPlumbingTube.length: 0.235531
+Rocket.FirstStage.LowerPlumbingTube.cg: (0 0 -0.1177655)
+Rocket.FirstStage.LowerPlumbingTube.position: (0 0 -2.944314)
+Rocket.FirstStage.LowerPlumbingTube.mass: 0
+Rocket.FirstStage.LowerPlumbingTube.outerDiameter: 0.167
+Rocket.FirstStage.LowerPlumbingTube.surfaceRoughness: 0.000007
+Rocket.FirstStage.FinCan+CC+MoterLiner.class: Bodytube
+Rocket.FirstStage.FinCan+CC+MoterLiner.length: 0.635
+Rocket.FirstStage.FinCan+CC+MoterLiner.cg: (0 0 -0.3175)
+Rocket.FirstStage.FinCan+CC+MoterLiner.position: (0 0 -3.179845)
+Rocket.FirstStage.FinCan+CC+MoterLiner.mass: 0
+Rocket.FirstStage.FinCan+CC+MoterLiner.outerDiameter: 0.167
+Rocket.FirstStage.FinCan+CC+MoterLiner.surfaceRoughness: 0.000007
+Rocket.FirstStage.LowerPlumbing.class: Mass
+Rocket.FirstStage.LowerPlumbing.mass: 0
+Rocket.FirstStage.LowerPlumbing.position: (0 0 0)
+Rocket.FirstStage.LowerPlumbing.cg: (0 0 -3.05534)
+Rocket.FirstStage.LowerPlumbing.MOI: (0.01179 0.01223 0.00261)
+Rocket.FirstStage.LowerInjectorBulkhead.class: Mass
+Rocket.FirstStage.LowerInjectorBulkhead.mass: 0
+Rocket.FirstStage.LowerInjectorBulkhead.position: (0 0 -3.11538)
+Rocket.FirstStage.LowerInjectorBulkhead.cg: (0 0 0)
+Rocket.FirstStage.LowerInjectorBulkhead.MOI: (0.00057 0.00057 0.00104)
+Rocket.FirstStage.Mixingplate.class: Mass
+Rocket.FirstStage.Mixingplate.mass: 0
+Rocket.FirstStage.Mixingplate.position: (0 0 -3.6406)
+Rocket.FirstStage.Mixingplate.cg: (0 0 0)
+Rocket.FirstStage.Mixingplate.MOI: (0.00033 0.00033 0.00064)
+Rocket.FirstStage.Nozzle+Houseing.class: Mass
+Rocket.FirstStage.Nozzle+Houseing.mass: 0
+Rocket.FirstStage.Nozzle+Houseing.position: (0 0 -3.7886)
+Rocket.FirstStage.Nozzle+Houseing.cg: (0 0 0)
+Rocket.FirstStage.Nozzle+Houseing.MOI: (0.00412 0.00412 0.00643)
+Rocket.FirstStage.DeltaFins.class: FinSet
+Rocket.FirstStage.DeltaFins.mass: 0
+Rocket.FirstStage.DeltaFins.position: (0 0 -3.339)
+Rocket.FirstStage.DeltaFins.cg: (0 0 -0.075)
+Rocket.FirstStage.DeltaFins.numFins: 3
+Rocket.FirstStage.DeltaFins.finCantAngle: 0
+Rocket.FirstStage.DeltaFins.firstFinAngle: 0
+Rocket.FirstStage.DeltaFins.sweepAngle: 53
+Rocket.FirstStage.DeltaFins.rootChord: 0.45
+Rocket.FirstStage.DeltaFins.tipChord: 0.264
+Rocket.FirstStage.DeltaFins.span: 0.14
+Rocket.FirstStage.DeltaFins.thickness: 0.014478
+Rocket.FirstStage.DeltaFins.surfaceRoughness: 0.000007
+Rocket.FirstStage.DeltaFins.LeadingEdge.shape: Round
+Rocket.FirstStage.DeltaFins.LeadingEdge.radius: 0.007239
+Rocket.FirstStage.DeltaFins.TrailingEdge.shape: Round
+Rocket.FirstStage.DeltaFins.TrailingEdge.radius: 0.007239
+Rocket.FirstStage.Motor.class: Motor
+Rocket.FirstStage.Motor.path: c:\Users\taiya\anaconda3\envs\SOAR2\Lib\site-packages\MAPLEAF\Examples\Motors\3p25-10k.txt
+
+
+---- End Sim Definition File ----
+
+
+---- Start Default Value Dictionary ----
+{'Actuator.controller': 'TableInterpolating',
+ 'Actuator.responseModel': 'FirstOrder',
+ 'Actuator.responseTime': '0.1',
+ 'AeroDamping.xDampingCoeffs': '(0 0 0)',
+ 'AeroDamping.yDampingCoeffs': '(0 0 0)',
+ 'AeroDamping.zDampingCoeffs': '(0 0 0)',
+ 'AeroForce.Cd': '0',
+ 'AeroForce.Cl': '0',
+ 'AeroForce.Lref': '0',
+ 'AeroForce.momentCoeffs': '(0 0 0)',
+ 'BoatTail.shape': 'cone',
+ 'Environment.AtmosphericPropertiesModel': 'USStandardAtmosphere',
+ 'Environment.ConstantAtmosphere.density': '1.225',
+ 'Environment.ConstantAtmosphere.pressure': '101325',
+ 'Environment.ConstantAtmosphere.temp': '15',
+ 'Environment.ConstantAtmosphere.viscosity': '1.789e-5',
+ 'Environment.ConstantMeanWind.velocity': '(0 0 0)',
+ 'Environment.EarthModel': 'Flat',
+ 'Environment.Hellman.alphaCoeff': '0.1429',
+ 'Environment.Hellman.altitudeLimit': '1000',
+ 'Environment.LaunchSite.elevation': '0',
+ 'Environment.LaunchSite.latitude': '0',
+ 'Environment.LaunchSite.longitude': '0',
+ 'Environment.LaunchSite.railLength': '0',
+ 'Environment.MeanWindModel': 'Constant',
+ 'Environment.SampledGroundWindData.launchMonth': 'Yearly',
+ 'Environment.SampledRadioSondeData.launchMonth': 'Yearly',
+ 'Environment.TabulatedAtmosphere.filePath': 'MAPLEAF/ENV/US_STANDARD_ATMOSPHERE.txt',
+ 'Environment.TurbulenceModel': 'None',
+ 'Environment.turbulenceOffWhenUnderChute': 'True',
+ 'FinSet.LeadingEdge.shape': 'Round',
+ 'FinSet.TrailingEdge.shape': 'Tapered',
+ 'FinSet.finCantAngle': '0',
+ 'FinSet.firstFinAngle': '0',
+ 'FinSet.numFinSpanSlicesForIntegration': '10',
+ 'Mass.cg': '(0 0 0)',
+ 'MonteCarlo.output': 'landingLocations',
+ 'Motor.burnTimeAdjustFactor': '1.0',
+ 'Motor.impulseAdjustFactor': '1.0',
+ 'Nosecone.shape': 'tangentOgive',
+ 'Optimization.showConvergencePlot': 'True',
+ 'RecoverySystem.cg': '(0 0 0)',
+ 'Rocket.Aero.addZeroLengthBoatTailsToAccountForBaseDrag': 'true',
+ 'Rocket.Aero.fullyTurbulentBL': 'true',
+ 'Rocket.Aero.surfaceRoughness': '0.000005',
+ 'Rocket.ControlSystem.MomentController.Type': 'ScheduledGainPIDRocket',
+ 'Rocket.ControlSystem.desiredFlightDirection': '(0 0 1)',
+ 'Rocket.ControlSystem.updateRate': '0',
+ 'Rocket.HIL.imuBaudrate': '57600',
+ 'Rocket.HIL.imuComPort': 'COM15',
+ 'Rocket.HIL.posUpdateRate': '20',
+ 'Rocket.HIL.quatUpdateRate': '100',
+ 'Rocket.HIL.teensyBaudrate': '9600',
+ 'Rocket.HIL.teensyComPort': 'COM20',
+ 'Rocket.HIL.velUpdateRate': '20',
+ 'Rocket.angularVelocity': '(0 0 0)',
+ 'Rocket.initialDirection': '(0 0 1)',
+ 'Rocket.name': 'Rocket',
+ 'Rocket.position': '(0 0 10)',
+ 'Rocket.velocity': '(0 0 0)',
+ 'SimControl.EndCondition': 'Altitude',
+ 'SimControl.EndConditionValue': '-1',
+ 'SimControl.RocketPlot': 'Off',
+ 'SimControl.StageDropPaths.compute': 'true',
+ 'SimControl.StageDropPaths.endCondition': 'Altitude',
+ 'SimControl.StageDropPaths.endConditionValue': '0',
+ 'SimControl.TimeStepAdaptation.Elementary.safetyFactor': '0.9',
+ 'SimControl.TimeStepAdaptation.PID.coefficients': '-0.01 -0.001 0',
+ 'SimControl.TimeStepAdaptation.controller': 'PID',
+ 'SimControl.TimeStepAdaptation.eventTimingAccuracy': '0.001',
+ 'SimControl.TimeStepAdaptation.maxFactor': '1.5',
+ 'SimControl.TimeStepAdaptation.maxTimeStep': '30',
+ 'SimControl.TimeStepAdaptation.minFactor': '0.3',
+ 'SimControl.TimeStepAdaptation.minTimeStep': '0.0001',
+ 'SimControl.TimeStepAdaptation.targetError': '0.001',
+ 'SimControl.loggingLevel': '2',
+ 'SimControl.plot': 'Position FlightAnimation',
+ 'SimControl.timeDiscretization': 'RK45Adaptive',
+ 'SimControl.timeStep': '0.01',
+ 'Stage.position': '(0 0 0)',
+ 'Stage.separationDelay': '0',
+ 'Stage.separationTriggerType': 'None',
+ 'Stage.separationTriggerValue': '0',
+ 'Stage.stageNumber': '0',
+ 'TabulatedAeroForce.Lref': '0',
+ 'testDefaultValue2': 'jkl;',
+ 'testValue.testDefaultValue1': 'asdf'}
+---- End Default Value Dictionary ----
+
+Starting Simulation:
+Time(s) Altitude(m,ASL)
+0.0000   874.60303
+0.0100   874.60303
+0.0201   874.60303
+0.0303   874.60303
+0.0406   874.60303
+0.0510   874.60303
+0.0615   874.60303
+0.0721   874.60325
+0.0828   874.60411
+0.0936   874.60618
+0.1045   874.61024
+0.1155   874.61722
+0.1266   874.62815
+0.1379   874.64395
+0.1492   874.66531
+0.1607   874.69282
+0.1723   874.72718
+0.1840   874.76897
+0.1958   874.81853
+0.2077   874.87617
+0.2197   874.94246
+0.2319   875.01796
+0.2442   875.10298
+0.2566   875.19769
+0.2691   875.30250
+0.2817   875.41804
+0.2945   875.54477
+0.3074   875.68296
+0.3204   875.83294
+0.3336   875.99515
+0.3468   876.16975
+0.3603   876.35706
+0.3738   876.55756
+0.3875   876.77174
+0.4013   876.99978
+0.4153   877.24241
+0.4294   877.50005
+0.4436   877.77319
+0.4580   878.06221
+0.4726   878.36734
+0.4872   878.68911
+0.5021   879.02831
+0.5170   879.38472
+0.5321   879.75883
+0.5474   880.15124
+0.5628   880.56296
+0.5784   880.99410
+0.5941   881.44485
+0.6100   881.91590
+0.6260   882.40627
+0.6422   882.91727
+0.6585   883.44989
+0.6750   884.00448
+0.6916   884.58134
+0.7084   885.18138
+0.7254   885.80521
+0.7425   886.45327
+Launch rail cleared
+0.7599   887.12560
+0.7773   887.82107
+0.7949   888.54144
+0.8127   889.28699
+0.8307   890.05875
+0.8488   890.85743
+0.8672   891.68301
+0.8856   892.53633
+0.9043   893.41898
+0.9232   894.33181
+0.9423   895.27601
+0.9615   896.25060
+0.9810   897.25783
+1.0006   898.29819
+1.0205   899.37267
+1.0405   900.48278
+1.0608   901.62935
+1.0813   902.81325
+1.1019   904.03425
+1.1228   905.29121
+1.1438   906.58770
+1.1651   907.92484
+1.1866   909.30284
+1.2082   910.72332
+1.2301   912.18551
+1.2522   913.68997
+1.2745   915.23989
+1.2971   916.83676
+1.3199   918.48137
+1.3429   920.17445
+1.3661   921.91447
+1.3896   923.70273
+1.4133   925.54008
+1.4372   927.42867
+1.4615   929.36899
+1.4859   931.36420
+1.5106   933.40917
+1.5354   935.50841
+1.5605   937.66585
+1.5859   939.88226
+1.6116   942.15959
+1.6375   944.49631
+1.6637   946.89598
+1.6901   949.35698
+1.7168   951.87714
+1.7438   954.46495
+1.7710   957.12404
+1.7985   959.85652
+1.8263   962.66252
+1.8544   965.54086
+1.8827   968.49359
+1.9112   971.52577
+1.9401   974.63821
+1.9693   977.83447
+1.9986   981.10321
+2.0283   984.45459
+2.0582   987.89310
+2.0885   991.41760
+2.1190   995.02817
+2.1499   998.72924
+2.1810   1002.52432
+2.2125   1006.41255
+2.2443   1010.40264
+2.2763   1014.48948
+2.3088   1018.68373
+2.3415   1022.98452
+2.3746   1027.39437
+2.4080   1031.91807
+2.4417   1036.55210
+2.4758   1041.29440
+2.5102   1046.15620
+2.5450   1051.13943
+2.5800   1056.23526
+2.6155   1061.46054
+2.6512   1066.81097
+2.6874   1072.29012
+2.7239   1077.90557
+2.7607   1083.65653
+2.7979   1089.53434
+2.8354   1095.54905
+2.8733   1101.71046
+2.9116   1108.01714
+2.9502   1114.46529
+2.9892   1121.06784
+3.0286   1127.81570
+3.0683   1134.71084
+3.1085   1141.76400
+3.1490   1148.97818
+3.1899   1156.36099
+3.2312   1163.89428
+3.2729   1171.60237
+3.3150   1179.48826
+3.3576   1187.54904
+3.4006   1195.78235
+3.4441   1204.19808
+3.4880   1212.79931
+3.5323   1221.58701
+3.5771   1230.56290
+3.6223   1239.73689
+3.6679   1249.08718
+3.7139   1258.62006
+3.7603   1268.33583
+3.8070   1278.22556
+3.8539   1288.27449
+3.9012   1298.50270
+3.9488   1308.91660
+3.9969   1319.52257
+4.0452   1330.27128
+4.0940   1341.22024
+4.1433   1352.35252
+4.1929   1363.64291
+4.2430   1375.10237
+4.2935   1386.73038
+4.3446   1398.52381
+4.3960   1410.45749
+4.4478   1422.51347
+4.5001   1434.73736
+4.5527   1447.07762
+4.6059   1459.57634
+4.6237   1463.76276
+4.6417   1467.98860
+4.6598   1472.25989
+4.6779   1476.51025
+4.6962   1480.80117
+4.7146   1485.13295
+4.7333   1489.50564
+4.7522   1493.91984
+4.7713   1498.37344
+4.7905   1502.86918
+4.8100   1507.40740
+4.8297   1511.98824
+4.8497   1516.61221
+4.8698   1521.27962
+4.8902   1525.99080
+4.9108   1530.74607
+4.9316   1535.54555
+4.9526   1540.38978
+4.9739   1545.27797
+4.9954   1550.21158
+5.0172   1555.19093
+5.0391   1560.21627
+5.0614   1565.28802
+5.0838   1570.40642
+5.1065   1575.57190
+5.1295   1580.78311
+5.1526   1586.01674
+5.1755   1591.19386
+5.1986   1596.41840
+5.2220   1601.69075
+5.2457   1607.01103
+5.2696   1612.37977
+5.2938   1617.79670
+5.3182   1623.26274
+5.3429   1628.77822
+5.3679   1634.34347
+5.3931   1639.95829
+5.4187   1645.62354
+5.4445   1651.33926
+5.4706   1657.10609
+5.4969   1662.92316
+5.5236   1668.79197
+5.5505   1674.71259
+5.5778   1680.68307
+5.6053   1686.70623
+5.6332   1692.78185
+5.6613   1698.91084
+5.6896   1705.06208
+5.7182   1711.26708
+5.7472   1717.52549
+5.7764   1723.83830
+5.8060   1730.20564
+5.8359   1736.62450
+5.8661   1743.09870
+5.8966   1749.62820
+5.9275   1756.21363
+5.9587   1762.85415
+5.9902   1769.54466
+6.0221   1776.29198
+6.0543   1783.09431
+6.0868   1789.94891
+6.1197   1796.86114
+6.1530   1803.83127
+6.1866   1810.85672
+6.2206   1817.94057
+6.2549   1825.08309
+6.2896   1832.28175
+6.3247   1839.53963
+6.3602   1846.85349
+6.3959   1854.18950
+6.4319   1861.58526
+6.4684   1869.03932
+6.5052   1876.55236
+6.5424   1884.11676
+6.5793   1891.59137
+6.6162   1899.05286
+6.6535   1906.56247
+6.6910   1914.09478
+6.7288   1921.68743
+6.7671   1929.33807
+6.8058   1937.04507
+6.8449   1944.80969
+6.8837   1952.48098
+6.9221   1960.05998
+6.9608   1967.67188
+6.9998   1975.33413
+7.0393   1983.05665
+7.0792   1990.83965
+7.1196   1998.68325
+7.1604   2006.58535
+7.2016   2014.54446
+7.2432   2022.56492
+7.2854   2030.64685
+7.3279   2038.78897
+7.3710   2046.99214
+7.4145   2055.25702
+7.4584   2063.56889
+7.5027   2071.93120
+7.5476   2080.35293
+7.5928   2088.83717
+7.6384   2097.33240
+7.6842   2105.84915
+7.7304   2114.42211
+7.7772   2123.05612
+7.8245   2131.75276
+7.8722   2140.51144
+7.9205   2149.32591
+7.9693   2158.19853
+8.0186   2167.13337
+8.0684   2176.12207
+8.1188   2185.16811
+8.1696   2194.26912
+8.2209   2203.41607
+8.2727   2212.62292
+8.3251   2221.88233
+8.3780   2231.20004
+8.4315   2240.57835
+8.4855   2250.01886
+8.5402   2259.51840
+8.5954   2269.07878
+8.6512   2278.69697
+8.7076   2288.37498
+8.7646   2298.11007
+8.8221   2307.88915
+8.8802   2317.71105
+8.9388   2327.59066
+8.9981   2337.52769
+9.0580   2347.51988
+9.1185   2357.56137
+9.1795   2367.64126
+9.2411   2377.76501
+9.3034   2387.94535
+9.3663   2398.17515
+9.4297   2408.44532
+9.4939   2418.77387
+9.5587   2429.15920
+9.6240   2439.56666
+9.6900   2450.01821
+9.7567   2460.52510
+9.8240   2471.07239
+9.8920   2481.66448
+9.9607   2492.31102
+10.0301  2503.00707
+10.1003  2513.74913
+10.1712  2524.54173
+10.2427  2535.37010
+10.3151  2546.25008
+10.3882  2557.17692
+10.4621  2568.14931
+10.5366  2579.15014
+10.6119  2590.19812
+10.6880  2601.28301
+10.7649  2612.40441
+10.8425  2623.56373
+10.9209  2634.76930
+11.0002  2646.00549
+11.0802  2657.28248
+11.1611  2668.59449
+11.2428  2679.93158
+11.3253  2691.30320
+11.4087  2702.71094
+11.4928  2714.13166
+11.5778  2725.58970
+11.6637  2737.07983
+11.7506  2748.60347
+11.8383  2760.15905
+11.9270  2771.73595
+12.0166  2783.33693
+12.1069  2794.93889
+12.1980  2806.54121
+12.2900  2818.15797
+12.3828  2829.77251
+12.4764  2841.39474
+12.5709  2853.01080
+12.6661  2864.61543
+12.7622  2876.22676
+12.8588  2887.77690
+12.9559  2899.28298
+13.0534  2910.72632
+13.1517  2922.15337
+13.2510  2933.58995
+13.3514  2945.03365
+13.4529  2956.48247
+13.5551  2967.89804
+13.6579  2979.25000
+13.7614  2990.57022
+13.8657  3001.84472
+13.9706  3013.07248
+14.0766  3024.27863
+14.1834  3035.45020
+14.2913  3046.60638
+14.4003  3057.74584
+14.5105  3068.87152
+14.6218  3079.97536
+14.7338  3091.00970
+14.8469  3102.01548
+14.9613  3112.99205
+15.0760  3123.86507
+15.1918  3134.69250
+15.3085  3145.46292
+15.4263  3156.17095
+15.5451  3166.82922
+15.6648  3177.40930
+15.7856  3187.92887
+15.9066  3198.31849
+16.0289  3208.64895
+16.1525  3218.92958
+16.2769  3229.11451
+16.4026  3239.23850
+16.5297  3249.29767
+16.6573  3259.23072
+16.7852  3269.01584
+16.9141  3278.70501
+17.0445  3288.32148
+17.1761  3297.85368
+17.3091  3307.29388
+17.4432  3316.62917
+17.5782  3325.83812
+17.7144  3334.94349
+17.8505  3343.84033
+17.9868  3352.56638
+18.1240  3361.15153
+18.2627  3369.62910
+18.4025  3377.98245
+18.5434  3386.19459
+18.6856  3394.27422
+18.8292  3402.22925
+18.9743  3410.04877
+19.1209  3417.73454
+19.2686  3425.25747
+19.4177  3432.62501
+19.5683  3439.83996
+19.7202  3446.88490
+19.8733  3453.74873
+20.0279  3460.44515
+20.1838  3466.95081
+20.3409  3473.25788
+20.4994  3479.37399
+20.6593  3485.28994
+20.8205  3490.99422
+20.9830  3496.48564
+21.1470  3501.75860
+21.3126  3506.81652
+21.4801  3511.65120
+21.6493  3516.25702
+21.8203  3520.62448
+21.9931  3524.74495
+22.1678  3528.61114
+22.3437  3532.20371
+22.5214  3535.52841
+22.7010  3538.57385
+22.8817  3541.32510
+23.0643  3543.78639
+23.2477  3545.93869
+23.4321  3547.78277
+23.6172  3549.31441
+23.8006  3550.51439
+23.9823  3551.37859
+Rocket + SimEventDetector overriding time step from 0.17826086275456898 to 0.1178286929397342 to accurately resolve upcoming event. Estimated occurence at: 24.338992983651135
+24.1622  3551.89411
+Rocket + SimEventDetector overriding time step from 0.11668237911220758 to 0.04073045407706347 to accurately resolve upcoming event. Estimated occurence at: 24.341174318296865
+24.2801  3552.04341
+Rocket + SimEventDetector overriding time step from 0.04109117221294393 to 0.014848216035220442 to accurately resolve upcoming event. Estimated occurence at: 24.343081415311165
+24.3208  3552.06123
+Rocket + SimEventDetector overriding time step from 0.015000249522788214 to 0.005117802865043789 to accurately resolve upcoming event. Estimated occurence at: 24.343334011591118
+24.3357  3552.06350
+Rocket + SimEventDetector overriding time step from 0.005170449111155137 to 0.0017257390547935484 to accurately resolve upcoming event. Estimated occurence at: 24.343363718740786
+24.3408  3552.06377
+Rocket + SimEventDetector overriding time step from 0.0017434952867650907 to 0.001 to accurately resolve upcoming event. Estimated occurence at: 24.34336707577223
+24.3425  3552.06380
+24.3435  3552.06380
+Simulation Complete
+
+Warning: The following default values were used in this simulation:
+Environment.AtmosphericPropertiesModel:      USStandardAtmosphere
+Environment.EarthModel:                      Flat
+Environment.LaunchSite.latitude:             0
+Environment.LaunchSite.longitude:            0
+FinSet.numFinSpanSlicesForIntegration:       10
+Motor.burnTimeAdjustFactor:                  1.0
+Motor.impulseAdjustFactor:                   1.0
+Rocket.Aero.surfaceRoughness:                0.000005
+Rocket.ControlSystem.MomentController.Type:  ScheduledGainPIDRocket
+SimControl.EndConditionValue:                -1
+SimControl.StageDropPaths.compute:           true
+SimControl.TimeStepAdaptation.PID.coefficients:-0.01 -0.001 0
+SimControl.TimeStepAdaptation.controller:    PID
+SimControl.TimeStepAdaptation.eventTimingAccuracy:0.001
+SimControl.TimeStepAdaptation.maxFactor:     1.5
+SimControl.TimeStepAdaptation.maxTimeStep:   30
+SimControl.TimeStepAdaptation.minFactor:     0.3
+SimControl.TimeStepAdaptation.minTimeStep:   0.0001
+SimControl.TimeStepAdaptation.targetError:   0.001
+Stage.separationDelay:                       0
+Stage.separationTriggerType:                 None
+Stage.separationTriggerValue:                0
+
+If this was not intended, override the default values by adding the above information to your simulation definition file.
+
+Writing log file: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1_Run43\FirstStage_timeStepLog.csv
+Writing log file: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1_Run43\FirstStage_derivativeEvaluationLog.csv
+Writing log file: C:\Users\taiya\anaconda3\envs\SOAR2\lib\site-packages\MAPLEAF\Examples\Simulations\SMlucca1_Run43\consoleOutput.txt
